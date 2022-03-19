@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098baf66aa501144895013fa19454bcb, type: 3}
+  m_Name: Protecteur
+  m_EditorClassIdentifier: 
+  id: 11
+  name: Protecteur
+  description: "Le <b>Protecteur</b> neurtalise tous les effets utilis\xE9s contre
+    son village. \n\n<color=red>Si aucun effet est utilis\xE9, le Protecteur perd
+    son pouvoir. </color>"
+  type: 0
+  statut: 0
+  color: {r: 0, g: 1, b: 0, a: 1}
+  level: 5
+  level1: "Annule 1 effet utilis\xE9 contre son village. Il meurt obligatoirement
+    \xE0 la fin de ce tour."
+  level2: "Annule <color=red>1</color> effet utilis\xE9 contre son village. "
+  level3: "Annule jusqu'\xE0 <color=red>2</color> effets utilis\xE9s contre son village. "
+  level4: "Annule jusqu'\xE0 <color=red>3</color> effets utilis\xE9s contre son village. "
+  level5: "Annule jusqu'\xE0 <color=red>3</color> effets utilis\xE9s contre son village.
+    Il est immunis\xE9 en cas d'\xE9chec."
+  disciple: Neutralise <color=red>3</color> attaques adverse pour obtenir l'<color=red><b>Apprenti
+    Protecteur.</b></color>

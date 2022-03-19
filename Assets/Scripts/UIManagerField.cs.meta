@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b2306ec9a3de3d047b907fc3f608dd4d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - godCard: {fileID: 4533204289867967427, guid: 70174e5c963dff24c971ad84b16ed522, type: 3}
+  - villagerCard: {fileID: 7529203635097182810, guid: bc6d117a411cf4b47ae52131be23ec98, type: 3}
+  - playerField: {fileID: 7784886350207006944, guid: d884e867b6f3a844f8c5ad1fa8204b4c, type: 3}
+  - playerHand: {fileID: 6906082501350646113, guid: aafe528a0c0e3174a9bf1a84a33b2f2a, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

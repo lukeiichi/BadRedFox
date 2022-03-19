@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "686067150147",
+    "firebase_url": "https://bad-red-fox.firebaseio.com",
+    "project_id": "bad-red-fox",
+    "storage_bucket": "bad-red-fox.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686067150147:android:d769f2b8418a989a4a13f6",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.NewUnityProject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686067150147-r6s8rmdbgimqc7cecs2ia3nfen2b6bpn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmBbVhxduKsutYs6uL5MODd2vn_vy1qOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686067150147-r6s8rmdbgimqc7cecs2ia3nfen2b6bpn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "686067150147-atth2dd5mghbprkm6qpg056gdkh4o48j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "BRF.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686067150147:android:3dfe3fed685b8fcb4a13f6",
+        "android_client_info": {
+          "package_name": "com.badredfox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686067150147-r6s8rmdbgimqc7cecs2ia3nfen2b6bpn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmBbVhxduKsutYs6uL5MODd2vn_vy1qOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686067150147-r6s8rmdbgimqc7cecs2ia3nfen2b6bpn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "686067150147-atth2dd5mghbprkm6qpg056gdkh4o48j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "BRF.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098baf66aa501144895013fa19454bcb, type: 3}
+  m_Name: Influenceur
+  m_EditorClassIdentifier: 
+  id: 7
+  name: Influenceur
+  description: "L\u2019<b>Influenceur</b> fait perdre la foi \xE0 un Croyant."
+  type: 0
+  statut: 0
+  color: {r: 1, g: 0, b: 0, a: 1}
+  level: 5
+  level1: "Fait perdre la foi \xE0 <color=red>1</color> cartes al\xE9atoirement."
+  level2: "Fait perdre la foi \xE0 <color=red>1</color> cartes al\xE9atoirement."
+  level3: "Fait perdre la foi \xE0 <color=red>1</color> cartes."
+  level4: "Fait perdre la foi \xE0 <color=red>2</color> cartes."
+  level5: "Fait perdre la foi \xE0 <color=red>2</color> cartes.\n\n<color=red>Cibler
+    un Dieu lui fait perdre 2 niveaux.</color>"
+  disciple: "Fait perdre la foi \xE0 <color=red>4</color> cartes pour obtenir l'<color=red><b>Apprenti
+    Influenceur.</b></color>"

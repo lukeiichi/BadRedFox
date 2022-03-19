@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098baf66aa501144895013fa19454bcb, type: 3}
+  m_Name: Metamorphe
+  m_EditorClassIdentifier: 
+  id: 9
+  name: "M\xE9tamorphe"
+  description: "Le <b>M\xE9tamorphe</b> prend l\u2019apparence d\u2019une carte adverse
+    et l\u2019\xE9limine. S\u2019il ne poss\xE8de pas la puissance n\xE9cessaire,
+    il devient un simple croyant. La carte est tout de m\xEAme d\xE9truite.\n\n<color=red>Cet
+    effet ne peut \xEAtre utilis\xE9 qu\u20191 seule fois.</color>"
+  type: 0
+  statut: 0
+  color: {r: 0, g: 0, b: 1, a: 1}
+  level: 5
+  level1: Devient un <b>Simple royant.</b>
+  level2: Devient un <b>Simple croyant.</b>
+  level3: "Peut prendre la place de n\u2019importe qu\u2019elle Croyant."
+  level4: "Peut prendre la place de n\u2019importe qu\u2019elle carte sauf les Dieux."
+  level5: "Peut prendre la place de n\u2019importe qu\u2019elle carte."
+  disciple: "Utilise le pouvoir du <b>M\xE9tamorphe</b> pour obtenir l'<color=red><b>Apprenti
+    M\xE9tamorphe.</b></color>"

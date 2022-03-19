@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbe9c307a9855547aace293b9319901, type: 3}
+  m_Name: Villageois
+  m_EditorClassIdentifier: 
+  id: 0
+  name: "Fid\xE8le"
+  description: "Le <b>Fid\xE8le</b> croit en un seul Dieu de son village. Il rapporte
+    <color=red>1</color> niveau \xE0 son Dieu."
+  type: 1
+  statut: 0
+  color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  god: {fileID: 11400000, guid: 125f64c4b686c58458428c1c604fec4a, type: 2}

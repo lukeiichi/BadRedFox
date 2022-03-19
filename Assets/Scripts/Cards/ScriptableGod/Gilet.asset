@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098baf66aa501144895013fa19454bcb, type: 3}
+  m_Name: Gilet
+  m_EditorClassIdentifier: 
+  id: 6
+  name: Gilet jaune
+  description: "Le <b>Gilet jaune</b> bloque les actions des cartes s\xE9lectionn\xE9es.
+    Si un joueur essaye d\u2019utiliser une carte bloqu\xE9e, il passe alors son
+    tour."
+  type: 0
+  statut: 0
+  color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  level: 5
+  level1: Bloque <color=red>1 carte</color> du village.
+  level2: "Bloque <color=red>1 carte</color> adjacente \xE0 la carte s\xE9lectionn\xE9e."
+  level3: "Bloque <color=red>la carte</color> selectionn\xE9e."
+  level4: "Bloque les <color=red>4 cartes adjacentes</color> \xE0 la carte s\xE9lectionn\xE9e"
+  level5: "Bloque la carte selectionn\xE9e ainsi que les <color=red>4 cartes adjacentes</color>."
+  disciple: "R\xE9ussit \xE0 emp\xEAcher un pouvoir <color=red>2</color> fois pour
+    obtenir l'<color=red><b>Apprenti Gilet jaune.</b></color>"
