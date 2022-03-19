@@ -7,6 +7,11 @@ using static Card;
 
 public class CardDescription : MonoBehaviour
 {
+    #region Initialisation
+    public GameObject cardInGame;
+    public GameObject playerVisual;
+    public GameObject deadCards;
+
     public Card card ;
     public Card target;
     public Step step;
@@ -16,8 +21,9 @@ public class CardDescription : MonoBehaviour
         step = GameObject
             .Find("Rappel")
             .transform
-            .GetComponent < Step > (); 
+            .GetComponent < Step > ();
     }
+    #endregion
 
     #region Play a Card
     // Lorsqu'une caret est joué, vérifie de quel type il est
@@ -26,25 +32,31 @@ public class CardDescription : MonoBehaviour
             GodClass god = card as GodClass;
             /*
             switch(god.Name){
-                case "Voyante":
+                case "Divinatrice":
                     if(god.Level == 1){
                         choose = false;
                         step.ChangeText("Choisis un village à cibler");
                     }
                     break;
+                case "Enchanteresse" :
+                    Debug.Log(deadCards.transform.GetComponent<DeadCardManager>().GetRandomCard());
+                    break;
                 default:
                     break;
             }*/
+            
+            Debug.Log(deadCards.transform.GetComponent<DeadCardManager>().GetRandomCard());
 
-                step.ChangeText("Choisis une carte à cibler");
+            // Change le texte du rappel de l'étape
+            step.ChangeText("Choisis une carte à cibler");
                 
-                /* PLUS QUE PROVISOIRE !! */
-                step.isPlayer = !step.isPlayer;
-                /* PLUS QUE PORVISOIRE !! */
+            /* PLUS QUE PROVISOIRE !! */
+            step.isPlayer = !step.isPlayer;
+            /* PLUS QUE PORVISOIRE !! */
         }
         else{
-            GodClass god =card as GodClass;
-            god.SorciereEffect(target, card as GodClass);
+            FoxClass god = card as FoxClass;
+            god.Kill(cardInGame, target);
         }
 
             /*
@@ -66,13 +78,18 @@ public class CardDescription : MonoBehaviour
     private void PlayFoxEffect(){}
      #endregion
 
-    public void SetValues(Card newCard) {
+    public void SetValues(Card newCard, int id) {
+        // A partir de l'id de la carte, on retrouver et associe son emplacement à cardInGame
+
+        // En fonction de si c'est son village, associe la carte en tant que carte joué ou carte ciblé
         if(step.isPlayer){
             card = newCard;
         }
         else{
             target = newCard;
+            cardInGame = playerVisual.transform.GetComponent<UIManagerField>().listCardsField[id];
         }
+
         // Sélectionne toutes les zones à éditer
         RawImage photo = GameObject
             .Find("Image")
@@ -90,11 +107,10 @@ public class CardDescription : MonoBehaviour
             .Find("Effect")
             .transform
             .GetComponent < TextMeshProUGUI > ();
-            
-                TextMeshProUGUI disciple = GameObject
-                        .Find("Disciple")
-                        .transform
-                        .GetComponent < TextMeshProUGUI > ();
+        TextMeshProUGUI disciple = GameObject
+            .Find("Disciple")
+            .transform
+            .GetComponent < TextMeshProUGUI > ();
 
         // Edite la description 
         photo.texture = Resources.Load("Images/" + card.Name)as Texture2D;

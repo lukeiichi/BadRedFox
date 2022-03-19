@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Card : ScriptableObject {
     #region Initialisation
@@ -57,11 +58,11 @@ public class Card : ScriptableObject {
         color = coul;
     }
     
-    // remonter a la description pour recuperer aussi l'meplacemetn sur le terre le gameobject
-    public void SetEffect(bool newEffect){  
+    // Modifie la couleur de la carte reçu en gris foncé
+    public void SetEffect(bool newEffect, GameObject cardInGame){  
         if(newEffect == false){
-            //le gameobject
-            //cardInGame.SetColor(new Color(180, 180 , 180 ,255));
+            RawImage image = cardInGame.transform.GetComponent<RawImage>();
+            image.color = new Color32(90,90,90,255);
         }
     }
 

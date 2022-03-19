@@ -18,6 +18,7 @@ etc
 public class CardInGame : MonoBehaviour
 {
     #region Initialisation
+    public int id;
     [SerializeField]
     public Card card;
 
@@ -30,6 +31,9 @@ public class CardInGame : MonoBehaviour
     #endregion
 
     #region Getters
+    public int Id{
+        get{return id;}
+    }
     public bool Effect {
         get {return effect;}
     }
@@ -52,11 +56,13 @@ public class CardInGame : MonoBehaviour
     #region EditCard
     // Modifie la couleur de la carte
     public void SetColor(Color coul){
+        
         color = coul;
     }
 
     // Modifie les données de la carte (statut, type et niveau)
-    public void SetValues(Card newCard) {
+    public void SetValues(Card newCard, int i) {
+        id = i;
         card = newCard;
 
         effect = card.Effect;
@@ -73,7 +79,7 @@ public class CardInGame : MonoBehaviour
     public void AddDescription()
     {
         descriptionCard.SetActive(true);
-        descriptionCard.transform.GetComponent<CardDescription>().SetValues(card);
+        descriptionCard.transform.GetComponent<CardDescription>().SetValues(card, id);
     }
 
     // Fait disparaître la section Description

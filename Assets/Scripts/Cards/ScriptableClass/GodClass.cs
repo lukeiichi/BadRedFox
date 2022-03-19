@@ -89,22 +89,37 @@ public class GodClass : Card
             default:
                 break;
         }*/
-    public void SorciereEffect(Card target, GodClass cardUsed){
-        if(target.Type == TypeEnum.God){
-            GodClass god = target as GodClass;
-            if(god.Level > cardUsed.Level){
-                Debug.Log("La carte n'a pas pû être neutralisé");
-            }
-        }
-        target.SetEffect(false);
-    }
 
-    
+    // Effet de la sorcière 
+    // Neutralise les dieux inférieur ou égal à son niveau
+    // Neutralise toutes autre cartes à effet
+    // Renvoie un message si aucune des conditions n'est remplies 
+
+    //Vérifier quel village on vise
+    public void EnchanteresseEffect(Card target, GodClass cardUsed, GameObject cardInGame){
+        // Prédéfinit le message d'erreur à envoyer
+        string message = "La carte n'a pas pû être neutralisé car elle ne possède aucun pouvoir ou est trop forte pour vote sorcière.";
+        if(target.Name != "Fidèle"){
+            if(target.Type == TypeEnum.God){
+                GodClass god = target as GodClass;
+                if(god.Level > cardUsed.Level){
+                    Debug.Log(message);
+                }
+            }
+            target.SetEffect(false, cardInGame);
+
+            // Modifie aussi la carte dans la main du joueur
+            UIManagerField playerVisual = GameObject.Find("PlayerVisual(Clone)").transform.GetComponent<UIManagerField>();
+            playerVisual.UpdateHand(target, "effect");
+        }else{
+            Debug.Log(message);
+        }
+    }
 
     // Effet de la voyante 
     // La couleur ne marche pas encore 
-    // La carte n'est pas encor chissit au hasard pour le level 1
-    public void VoyanteEffect(Card target, GodClass cardUsed){
+    // La carte n'est pas encor choissit au hasard pour le level 1
+    public void DivinatriceEffect(Card target, GodClass cardUsed){
         switch(cardUsed.Level){
             case 5:
                 Debug.Log("La carte sélectionné est " + target.Name);

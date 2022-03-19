@@ -472,8 +472,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f4940769b868648912ea5a3d27a466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardInGame: {fileID: 0}
+  playerVisual: {fileID: 4445137470226176303, guid: 8e22b091d369fc74d8fff067f1f32c74, type: 3}
+  deadCards: {fileID: 8539148118925621246, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
   card: {fileID: 0}
   target: {fileID: 0}
+  step: {fileID: 0}
 --- !u!1 &3008947118977393009
 GameObject:
   m_ObjectHideFlags: 0

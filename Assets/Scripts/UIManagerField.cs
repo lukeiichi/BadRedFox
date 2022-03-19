@@ -2,25 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using Random = System.Random;
 using System.Threading.Tasks;
 using System.Linq;
 using Mirror;
+using static Card;
+using System;
 
 public class UIManagerField : NetworkBehaviour
 {
-    public enum TypeEnum {
-        God,
-        Fidele,
-        Fox
-    }
 
     //Initialisation
     public GameObject[] listCardsField;
     public GameObject[] listCardsHand;
 
     private static readonly Random random = new Random();
+
+    // Modifie l'état des cartes situé dans la main du joueur
+    public void UpdateHand(Card updatedCard, string reason){
+        GameObject cardFound = Array.Find(listCardsHand, x => x.transform.GetComponent<CardInGame>().card.Name == updatedCard.Name);
+        if (reason == "dead"){
+            if (updatedCard.Type == TypeEnum.Fidele){
+                cardFound.transform.GetComponent<Number>().Kill();
+            }else{
+            Destroy(cardFound.transform.GetComponent<RawImage>());
+            Destroy(cardFound.transform.GetComponent<EventTrigger>());
+            }
+
+        }else{
+            updatedCard.SetEffect(false, cardFound);
+        }
+    }
+
+
 
     // Fonction au lancement qui distribue toute les cartes dont un village a besoin
     public void DrawCards()
@@ -60,10 +76,10 @@ public class UIManagerField : NetworkBehaviour
 
         // Ajoute des images aux cartes de la main autre que fidèle
         for (var i = 0; i < PlayerManager.listCard.Count; i++) {
-            GetTextureCoroutine(PlayerManager.listCard[i], listCardsHand[i], PlayerManager.listCard[i].Color);
+            GetTextureCoroutine(PlayerManager.listCard[i], listCardsHand[i], PlayerManager.listCard[i].Color, -1);
         }
         // Ajoute l'image et la texte du villageois dans la main
-        GetTextureCoroutine(villageois, listCardsHand[5], Color.white);
+        GetTextureCoroutine(villageois, listCardsHand[5], Color.white, -1);
 
         //Ajoute 20 cartes villageois
         for (var i = 0; i < 20; i++) {
@@ -89,7 +105,7 @@ public class UIManagerField : NetworkBehaviour
             } else if (PlayerManager.listCard[i].Type == Card.TypeEnum.God) {
                 colorCard = PlayerManager.listCard[i].Color;
             }
-            GetTextureCoroutine(PlayerManager.listCard[i], listCardsField[i], colorCard);
+            GetTextureCoroutine(PlayerManager.listCard[i], listCardsField[i], colorCard, i);
         }
         #endregion
     }
@@ -112,9 +128,9 @@ public class UIManagerField : NetworkBehaviour
 
     // Ajoute une image aux cartes créées url : L'url de l'image carte : La carte a
     // éditer
-    private void GetTextureCoroutine(Card card, GameObject cardPlace, Color colorCard) {
+    private void GetTextureCoroutine(Card card, GameObject cardPlace, Color colorCard, int i) {
         CardInGame cardInGame = cardPlace.transform.GetComponent < CardInGame > ();
-        cardInGame.SetValues(card);
+        cardInGame.SetValues(card, i);
         cardInGame.SetColor(colorCard);
 
         RawImage rawImage = cardPlace.transform.GetComponent < RawImage > ();
