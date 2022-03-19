@@ -653,65 +653,72 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1685891675
-GameObject:
+--- !u!1001 &8539148118463946149
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1685891678}
-  - component: {fileID: 1685891677}
-  - component: {fileID: 1685891676}
-  m_Layer: 0
-  m_Name: DeadCardManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1685891676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1685891675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e45c6db8f47e76d4ea53e35fa2eda73e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1685891677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1685891675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 1852606977
-  serverOnly: 1
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
---- !u!4 &1685891678
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1685891675}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 1030, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8539148118925621240, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: sceneId
+      value: 1852606977
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621241, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: listDeadCards.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621241, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: listDeadCards.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: af9400829c302384ab8fb446a51799b7, type: 2}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1030
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621243, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539148118925621246, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+      propertyPath: m_Name
+      value: DeadCardManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
