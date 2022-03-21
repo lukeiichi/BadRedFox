@@ -10,7 +10,6 @@ public class PlayerManager : NetworkManager
     public static List<Card> listCard = new List<Card>(); 
 
     void Awake(){
-
         GameObject playerVisual = Instantiate(playerField, new Vector3(0, 0, 0), Quaternion.identity);
         NetworkServer.Spawn(playerVisual);
         

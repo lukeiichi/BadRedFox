@@ -22,12 +22,22 @@ public class FoxClass : Card
     //
     //Sait pas encore quel joueur on vise
     public void Kill(GameObject cardObject, Card card){
-        Destroy(cardObject.transform.GetComponent<RawImage>());
-        Destroy(cardObject.transform.GetComponent<EventTrigger>());
+        // Vérifie si la gardienne protège la carte
+        if(!card.Protected){
+            Destroy(cardObject.transform.GetComponent<RawImage>());
+            Destroy(cardObject.transform.GetComponent<EventTrigger>());
 
-        UIManagerField playerVisual = GameObject.Find("PlayerVisual(Clone)").transform.GetComponent<UIManagerField>();
-        playerVisual.UpdateHand(card, "dead");
+            UIManagerField playerVisual = GameObject.Find("PlayerVisual(Clone)").transform.GetComponent<UIManagerField>();
+            playerVisual.UpdateHand(card, "dead");
 
-        GameObject.Find("DeadCardManager").transform.GetComponent<DeadCardManager>().listDeadCards.Add(card);
+            GameObject.Find("DeadCardManager").transform.GetComponent<DeadCardManager>().listDeadCards.Add(card);
+        }
+        else{
+            Return("La carte sélectionnée n'a pas pu être attaqué");
+        }
+    }
+
+    private void Return(string message){
+        Debug.Log(message);
     }
 }

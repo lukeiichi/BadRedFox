@@ -117,11 +117,13 @@ public class GodClass : Card
     }
 
     // Effet de la voyante 
+    // 
+    //
     // La couleur ne marche pas encore 
     // La carte n'est pas encor choissit au hasard pour le level 1
     public void DivinatriceEffect(Card target, GodClass cardUsed){
         switch(cardUsed.Level){
-            case 5:
+            case >=5:
                 Debug.Log("La carte sélectionné est " + target.Name);
                 break;
             case 4 :
@@ -145,6 +147,47 @@ public class GodClass : Card
                     break;
         }
     }
+
+    // Effet de la gardienne
+    public void GardienneEffect(GodClass card, List<Card> deck){
+        switch(card.Level){
+            case >= 5:/*
+                List<Card> protectedCard = deck.FindAll(delegate(Card x){return x.Color == card.Color;});
+                foreach(Card nonProtectedCard in protectedCard){
+                    nonProtectedCard.SetProtection(true);*/
+                }
+                break;
+            case 4:
+                
+                break;
+            case 3:
+                
+                break;
+            case 2:
+                
+                break;
+            default :
+                
+                break;
+        }
+    }
+
+
+    public void NecromancienEffect(){}
+    public void InformateurEffect(){}
+    public void LeaderEffect(){}
+    public void MetamorpheEffect(){}
+    public void ProtecteurEffect(){}
+    public void GiletEffect(){}
+    public void EnsorceleuseEffect(){}
+    public void EnfantEffect(){}
+    public void ImitatriceEffect(){}
+    public void ContagionEffect(){}
+    public void SatanisteEffect(){}
     
     #endregion
+
+    private void Return(string message){
+
+    }
 }

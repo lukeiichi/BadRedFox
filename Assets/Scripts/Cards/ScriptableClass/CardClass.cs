@@ -20,6 +20,8 @@ public class Card : ScriptableObject {
     public bool effect = true;
     public Color color = Color.white;
 
+    public bool isProtected = false;
+
     /* Initialisation de la carte
     Fonction qui donne toutes les informations à la carte
     */
@@ -33,6 +35,9 @@ public class Card : ScriptableObject {
     #endregion
 
     #region Getters
+    public bool Protected{
+        get {return isProtected;}
+    }
     public int Id {
         get {return id;}
     }
@@ -53,6 +58,10 @@ public class Card : ScriptableObject {
     }
     #endregion
 
+    // Edite la protection de la carte
+    public void SetProtection(bool protection){
+        isProtected = protection;
+    }
     // Edite la couleur de la carte 
     public void SetColor(Color coul) {
         color = coul;
@@ -65,7 +74,4 @@ public class Card : ScriptableObject {
             image.color = new Color32(90,90,90,255);
         }
     }
-
-    // Supprime la carte du village
-    private void Die() {}
 }

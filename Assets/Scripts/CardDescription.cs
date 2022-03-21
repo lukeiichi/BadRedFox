@@ -55,8 +55,7 @@ public class CardDescription : MonoBehaviour
             /* PLUS QUE PORVISOIRE !! */
         }
         else{
-            FoxClass god = card as FoxClass;
-            god.Kill(cardInGame, target);
+            GodClass god = card as GodClass;
         }
 
             /*
@@ -86,6 +85,7 @@ public class CardDescription : MonoBehaviour
             card = newCard;
         }
         else{
+            Debug.Log("la carte Visé est le " + newCard.Name);
             target = newCard;
             cardInGame = playerVisual.transform.GetComponent<UIManagerField>().listCardsField[id];
         }

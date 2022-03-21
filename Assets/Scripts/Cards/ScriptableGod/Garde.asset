@@ -15,10 +15,12 @@ MonoBehaviour:
   id: 5
   name: Garde du corps
   description: "Le <b>Garde du corps</b> se voue corps et \xE2me pour prot\xE9ger
-    un Dieu et ses Croyants."
+    un Dieu et ses Croyants.\n\nL'effet de la <color=red>Gardienne</color> doit \xEAtre
+    r\xE9utilis\xE9 \xE0 chaque fois qu'elle perd un niveau."
   type: 0
-  statut: 0
-  color: {r: 0, g: 0, b: 1, a: 1}
+  effect: 1
+  color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  isProtected: 0
   level: 5
   level1: "Prot\xE8ge un simple Croyant de la mort."
   level2: "Prot\xE8ge un Croyant de la mort."
