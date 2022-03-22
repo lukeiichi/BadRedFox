@@ -8,21 +8,21 @@ using static Card;
 public class CardDescription : MonoBehaviour
 {
     #region Initialisation
-    public GameObject cardInGame;
     public GameObject playerVisual;
     public GameObject deadCards;
+    public GameObject chooseButton;
+    public GameObject playButton;
+    public Step step;
 
+    public GameObject cardInGame;
     public Card card ;
     public Card target;
-    public Step step;
     private bool choose;
-    private GameObject ciblerButton;
 
     void Start(){
         // Cache la description en entréé de jeu
-        GameObject.Find("CardDescription").SetActive(false);
-        ciblerButton = GameObject.Find("CiblerButton");
-        ciblerButton.SetActive(false);
+        HideDescription();
+        playButton.SetActive(false);
 
         // Initialise step
         step = GameObject
@@ -32,12 +32,43 @@ public class CardDescription : MonoBehaviour
     }
     #endregion
 
+    // Cache la section description
+    public void HideDescription(){
+        GameObject.Find("CardDescription").SetActive(false);
+    }
+
     #region Play a Card
+    public void PlayCard(){
+        // Repasser à l'étape de sélection du jeu
+        step.isPlayer = !step.isPlayer;
+        step.ChangeText("Choisis une carte à jouer");
+        chooseButton.SetActive(true);
+        playButton.SetActive(false);
+        HideDescription();
+
+        GodClass god = card as GodClass;
+        switch(god.Name){
+            case "La Divinatrice" : 
+                god.DivinatriceEffect(target);
+                break;
+            case "L'Enchanteresse" :
+                god.EnchanteresseEffect(target, cardInGame);
+                break;
+            case "La Gardienne" : 
+                god.GardienneEffect(target);
+                break;
+            default :
+                god.DivinatriceEffect(target);
+                break;
+        }
+        /*
+                    GodClass god = card as GodClass;
+            step.isPlayer = !step.isPlayer;*/
+    }
+
     // Lorsqu'une caret est joué, vérifie de quel type il est
     public void ChooseCard(){
-        GameObject.Find("CardDescription").SetActive(false);
-        if(step.isPlayer){  
-            GodClass god = card as GodClass;
+        HideDescription();
             /*
             switch(god.Name){
                 case "Divinatrice":
@@ -60,24 +91,9 @@ public class CardDescription : MonoBehaviour
                 
             /* PLUS QUE PROVISOIRE !! */
             step.isPlayer = !step.isPlayer;
-            GameObject.Find("PlayerHand").SetActive(false);
-            ciblerButton.SetActive(true);
+            chooseButton.SetActive(false);
+            playButton.SetActive(true);
             /* PLUS QUE PORVISOIRE !! */
-        }
-        else{
-            GodClass god = card as GodClass;
-            step.isPlayer = !step.isPlayer;
-        }
-
-            /*
-        switch (card.Type){
-            case TypeEnum.God:
-                PlayGodEffect();
-                break;
-            case TypeEnum.Fox:
-                PlayFoxEffect();
-                break;
-        }*/
     }
     #endregion
 
@@ -115,13 +131,13 @@ public class CardDescription : MonoBehaviour
             .GetComponent < TextMeshProUGUI > ();
 
         // Edite la description 
-        photo.texture = Resources.Load("Images/" + card.Name)as Texture2D;
-        name.text = card.Name;
-        desc.text = card.Description;
+        photo.texture = Resources.Load("Images/" + newCard.Name)as Texture2D;
+        name.text = newCard.Name;
+        desc.text = newCard.Description;
 
         // Seulement si c'est une carte Dieu
-        if(card.Type == TypeEnum.God){
-                GodClass god = card as GodClass;
+        if(newCard.Type == TypeEnum.God){
+                GodClass god = newCard as GodClass;
                 // Vérifie le niveau actuel de la carte
                 switch (god.Level){
                         case 1:

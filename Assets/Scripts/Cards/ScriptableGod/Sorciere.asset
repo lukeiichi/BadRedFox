@@ -13,17 +13,18 @@ MonoBehaviour:
   m_Name: Sorciere
   m_EditorClassIdentifier: 
   id: 13
-  name: "Sorci\xE8re"
-  description: "La <b>Sorci\xE8re</b> neutralise le pouvoir d\u2019une carte. Cette
+  name: L'Enchanteresse
+  description: "L'<b>Enchanteresse</b> neutralise le pouvoir d\u2019une carte. Cette
     carte devient alors qu'un <b>Simple croyant.</b>"
   type: 0
-  statut: 0
-  color: {r: 0, g: 1, b: 0, a: 1}
+  effect: 1
+  color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  isProtected: 0
   level: 5
   level1: Neutralise les Dieux de niveau <color=red>1</color>.
   level2: Neutralise les Dieux de niveau <color=red>2</color>.
   level3: Neutralise les Dieux de niveau <color=red>3</color>.
   level4: Neutralise les Dieux de niveau <color=red>4</color>.
   level5: Neutralise les Dieux de niveau <color=red>5</color>.
-  disciple: "Neutralise <color=red>3</color> cartes pour obtenir l'<color=red><b>Apprenti
-    Sorci\xE8re.</b></color>"
+  disciple: Neutralise <color=red>3</color> cartes pour obtenir l'<color=red><b>Apprenti
+    Enchanteresse.</b></color>

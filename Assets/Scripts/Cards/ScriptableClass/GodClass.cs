@@ -96,14 +96,14 @@ public class GodClass : Card
     // Renvoie un message si aucune des conditions n'est remplies 
 
     //Vérifier quel village on vise
-    public void EnchanteresseEffect(Card target, GodClass cardUsed, GameObject cardInGame){
+    public void EnchanteresseEffect(Card target, GameObject cardInGame){
         // Prédéfinit le message d'erreur à envoyer
         string message = "La carte n'a pas pû être neutralisé car elle ne possède aucun pouvoir ou est trop forte pour vote sorcière.";
         if(target.Name != "Fidèle"){
             if(target.Type == TypeEnum.God){
                 GodClass god = target as GodClass;
-                if(god.Level > cardUsed.Level){
-                    Debug.Log(message);
+                if(god.Level > this.Level){
+                    Return(message);
                 }
             }
             target.SetEffect(false, cardInGame);
@@ -112,38 +112,38 @@ public class GodClass : Card
             UIManagerField playerVisual = GameObject.Find("PlayerVisual(Clone)").transform.GetComponent<UIManagerField>();
             playerVisual.UpdateHand(target, "effect");
         }else{
-            Debug.Log(message);
+            Return(message);
         }
     }
 
     // Effet de la voyante 
     // 
     //
-    // La couleur ne marche pas encore 
+    // La couleur ne marche pas encore (ressort le RGB)
     // La carte n'est pas encor choissit au hasard pour le level 1
-    public void DivinatriceEffect(Card target, GodClass cardUsed){
-        switch(cardUsed.Level){
-            case >=5:
-                Debug.Log("La carte sélectionné est " + target.Name);
+    public void DivinatriceEffect(Card target){
+        switch(this.Level){
+            case >= 7 :
+                Return("La carte sélectionné est " + target.Name);
                 break;
             case 4 :
-                Debug.Log("La carte sélectionné est un " + target.Type);
+                Return("La carte sélectionné est un " + target.Type);
                 break;
             case 3 :
                     if(target.Type == TypeEnum.God){
-                        Debug.Log("La carte sélectionné appartient à la regigion de  " + target.Name);
+                        Return("La carte sélectionné appartient à la regigion de  " + target.Name);
                     }else if(target.Type == TypeEnum.Fidele){
                         FideleClass fidele = target as FideleClass;
-                        Debug.Log("La carte sélectionné appartient à la regigion de  " + fidele.God.Name);
+                        Return("La carte sélectionné appartient à la regigion de  " + fidele.God.Name);
                     }else{
-                        Debug.Log("La carte sélectionné n'appartient à aucune religion");
+                        Return("La carte sélectionné n'appartient à aucune religion");
                     }
                     break;
             case 0 : 
-                    Debug.Log("La sorcière n'a pas réussit à utiliser son pouvoir");
+                    Return("La sorcière n'a pas réussit à utiliser son pouvoir");
                     break;
             default :
-                    Debug.Log("La carte sélectionné appartient à la religion de couleur " + target.Color);
+                    Return("La carte sélectionné appartient à la religion de couleur " + target.Color.ToString("x"));
                     break;
         }
     }
@@ -154,8 +154,8 @@ public class GodClass : Card
     // Ajouter un effet visuel sur la carte
     // Manque l'effet au niveau 5 
     // Indiquer au joueur le possedant que le bouclier a sauté 
-    public void GardienneEffect(Card card, GodClass cardUsed, List<Card> deck){
-        switch(cardUsed.Level){
+    public void GardienneEffect(Card card){
+        switch(this.Level){
             case >= 5:/*
                 List<Card> protectedCard = deck.FindAll(delegate(Card x){return x.Color == card.Color;});
                 foreach(Card nonProtectedCard in protectedCard){

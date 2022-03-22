@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Voyante
   m_EditorClassIdentifier: 
   id: 16
-  name: Voyante
-  description: "La <b>Voyante</b> use de son pouvoir pour r\xE9v\xE8ler l'identit\xE9
+  name: La Divinatrice
+  description: "La <b>Divinatrice</b> use de son pouvoir pour r\xE9v\xE8ler l'identit\xE9
     d'une carte."
   type: 0
-  statut: 0
+  effect: 1
   color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  isProtected: 0
   level: 5
   level1: "R\xE9v\xE8le la couleur de la croyance d'une carte choisit au hasard."
   level2: "R\xE9v\xE8le la couleur de la croyance."
@@ -27,4 +28,4 @@ MonoBehaviour:
   level4: "R\xE9v\xE8le si c\u2019est un Croyant ou un Dieu."
   level5: "R\xE9v\xE8le l\u2019identit\xE9 de la carte choisie."
   disciple: "D\xE9couvre l'emplacement d'un Dieu pour obtenir l'<color=red><b>Apprenti
-    Voyant.</b></color>"
+    Divinatrice.</b></color>"
