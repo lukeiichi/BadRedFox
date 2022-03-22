@@ -84,7 +84,10 @@ public class CardInGame : MonoBehaviour
 
     // Fait disparaître la section Description
     public void RemoveDescription(){
-        //descriptionCard.SetActive(false);
+        GameObject descriptionField = GameObject.Find("CardDescription");
+        if(descriptionField){
+            descriptionField.SetActive(false);
+        }   
     }
     #endregion
 }

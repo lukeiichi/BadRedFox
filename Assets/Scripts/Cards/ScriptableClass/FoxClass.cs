@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using static Card;
 
 [CreateAssetMenu(fileName="FoxCard", menuName="Assets/Fox")]
 public class FoxClass : Card
@@ -23,7 +24,7 @@ public class FoxClass : Card
     //Sait pas encore quel joueur on vise
     public void Kill(GameObject cardObject, Card card){
         // Vérifie si la gardienne protège la carte
-        if(!card.Protected){
+        if(card.Protected == Protection.Vulnerable){
             Destroy(cardObject.transform.GetComponent<RawImage>());
             Destroy(cardObject.transform.GetComponent<EventTrigger>());
 
@@ -34,6 +35,9 @@ public class FoxClass : Card
         }
         else{
             Return("La carte sélectionnée n'a pas pu être attaqué");
+            if(card.Protected == Protection.OneTime){
+                card.SetProtection(Protection.Vulnerable);
+            }
         }
     }
 

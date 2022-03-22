@@ -140,7 +140,7 @@ public class GodClass : Card
                     }
                     break;
             case 0 : 
-                    Debug.Log("La sorcière n'a pas réussit à utiliser son pouoir");
+                    Debug.Log("La sorcière n'a pas réussit à utiliser son pouvoir");
                     break;
             default :
                     Debug.Log("La carte sélectionné appartient à la religion de couleur " + target.Color);
@@ -149,25 +149,27 @@ public class GodClass : Card
     }
 
     // Effet de la gardienne
-    public void GardienneEffect(GodClass card, List<Card> deck){
-        switch(card.Level){
+    // Protège une ou plusieur cartes d'une même religion d'une attaque d'un apprenti
+    //
+    // Ajouter un effet visuel sur la carte
+    // Manque l'effet au niveau 5 
+    // Indiquer au joueur le possedant que le bouclier a sauté 
+    public void GardienneEffect(Card card, GodClass cardUsed, List<Card> deck){
+        switch(cardUsed.Level){
             case >= 5:/*
                 List<Card> protectedCard = deck.FindAll(delegate(Card x){return x.Color == card.Color;});
                 foreach(Card nonProtectedCard in protectedCard){
-                    nonProtectedCard.SetProtection(true);*/
-                }
-                break;
-            case 4:
-                
+                    nonProtectedCard.SetProtection(true);
+                }*/
                 break;
             case 3:
-                
+                card.SetProtection(Protection.OneTime);
                 break;
-            case 2:
-                
+            case 0 :
+                Return("La Gardienne n'a pas réussit à utiliser son pouvoir");
                 break;
             default :
-                
+                    card.SetProtection(Protection.Protected);
                 break;
         }
     }
@@ -188,6 +190,6 @@ public class GodClass : Card
     #endregion
 
     private void Return(string message){
-
+        Debug.Log(message);
     }
 }

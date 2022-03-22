@@ -10,6 +10,11 @@ public class Card : ScriptableObject {
         Fidele,
         Fox
     }
+    public enum Protection{
+        Vulnerable,
+        Protected,
+        OneTime
+    }
 
     public int id;
     public string name;
@@ -20,7 +25,7 @@ public class Card : ScriptableObject {
     public bool effect = true;
     public Color color = Color.white;
 
-    public bool isProtected = false;
+    public Protection isProtected = Protection.Vulnerable;
 
     /* Initialisation de la carte
     Fonction qui donne toutes les informations à la carte
@@ -35,7 +40,7 @@ public class Card : ScriptableObject {
     #endregion
 
     #region Getters
-    public bool Protected{
+    public Protection Protected{
         get {return isProtected;}
     }
     public int Id {
@@ -59,7 +64,7 @@ public class Card : ScriptableObject {
     #endregion
 
     // Edite la protection de la carte
-    public void SetProtection(bool protection){
+    public void SetProtection(Protection protection){
         isProtected = protection;
     }
     // Edite la couleur de la carte 

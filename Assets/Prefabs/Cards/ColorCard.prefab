@@ -167,29 +167,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 9
+  - eventID: 4
     callback:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: -6316071294076197012}
           m_TargetAssemblyTypeName: CardInGame, Assembly-CSharp
           m_MethodName: AddDescription
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 10
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: -6316071294076197012}
-          m_TargetAssemblyTypeName: CardInGame, Assembly-CSharp
-          m_MethodName: RemoveDescription
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -239,7 +223,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 4025533920852626978}
 --- !u!114 &-6316071294076197012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,8 +236,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89fc62244c0ed64ebe20bc998d476cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   card: {fileID: 0}
-  statut: 0
+  effect: 0
   type: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   level: 0

@@ -16,8 +16,15 @@ public class CardDescription : MonoBehaviour
     public Card target;
     public Step step;
     private bool choose;
+    private GameObject ciblerButton;
 
     void Start(){
+        // Cache la description en entréé de jeu
+        GameObject.Find("CardDescription").SetActive(false);
+        ciblerButton = GameObject.Find("CiblerButton");
+        ciblerButton.SetActive(false);
+
+        // Initialise step
         step = GameObject
             .Find("Rappel")
             .transform
@@ -27,7 +34,8 @@ public class CardDescription : MonoBehaviour
 
     #region Play a Card
     // Lorsqu'une caret est joué, vérifie de quel type il est
-    public void PlayCard(){
+    public void ChooseCard(){
+        GameObject.Find("CardDescription").SetActive(false);
         if(step.isPlayer){  
             GodClass god = card as GodClass;
             /*
@@ -45,17 +53,20 @@ public class CardDescription : MonoBehaviour
                     break;
             }*/
             
-            Debug.Log(deadCards.transform.GetComponent<DeadCardManager>().GetRandomCard());
+            // Debug.Log(deadCards.transform.GetComponent<DeadCardManager>().GetRandomCard());
 
             // Change le texte du rappel de l'étape
             step.ChangeText("Choisis une carte à cibler");
                 
             /* PLUS QUE PROVISOIRE !! */
             step.isPlayer = !step.isPlayer;
+            GameObject.Find("PlayerHand").SetActive(false);
+            ciblerButton.SetActive(true);
             /* PLUS QUE PORVISOIRE !! */
         }
         else{
             GodClass god = card as GodClass;
+            step.isPlayer = !step.isPlayer;
         }
 
             /*
@@ -68,24 +79,15 @@ public class CardDescription : MonoBehaviour
                 break;
         }*/
     }
-
-    // Utilise l'effet d'une carte Dieu
-    private void PlayGodEffect(){
-        Debug.Log(card.Name);
-    }
-    // Utilise l'effet d'une carte Renard
-    private void PlayFoxEffect(){}
-     #endregion
+    #endregion
 
     public void SetValues(Card newCard, int id) {
         // A partir de l'id de la carte, on retrouver et associe son emplacement à cardInGame
-
         // En fonction de si c'est son village, associe la carte en tant que carte joué ou carte ciblé
         if(step.isPlayer){
             card = newCard;
         }
         else{
-            Debug.Log("la carte Visé est le " + newCard.Name);
             target = newCard;
             cardInGame = playerVisual.transform.GetComponent<UIManagerField>().listCardsField[id];
         }
