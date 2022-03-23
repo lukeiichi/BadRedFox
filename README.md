@@ -1,2 +1,3 @@
 # BadRedFox
-A Card Game made with Unity
+
+Le BadRedFox est un jeu de carte stratégique créé avec Unity. 
