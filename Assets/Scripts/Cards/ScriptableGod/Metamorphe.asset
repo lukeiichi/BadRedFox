@@ -13,16 +13,17 @@ MonoBehaviour:
   m_Name: Metamorphe
   m_EditorClassIdentifier: 
   id: 9
-  name: "M\xE9tamorphe"
+  name: "Le M\xE9tamorphe"
   description: "Le <b>M\xE9tamorphe</b> prend l\u2019apparence d\u2019une carte adverse
     et l\u2019\xE9limine. S\u2019il ne poss\xE8de pas la puissance n\xE9cessaire,
-    il devient un simple croyant. La carte est tout de m\xEAme d\xE9truite.\n\n<color=red>Cet
+    il devient un Simple croyant. La carte est tout de m\xEAme d\xE9truite.\n\n<color=red>Cet
     effet ne peut \xEAtre utilis\xE9 qu\u20191 seule fois.</color>"
   type: 0
-  statut: 0
-  color: {r: 0, g: 0, b: 1, a: 1}
+  effect: 1
+  color: {r: 1, g: 0, b: 0, a: 1}
+  isProtected: 0
   level: 5
-  level1: Devient un <b>Simple royant.</b>
+  level1: Devient un <b>Simple croyant.</b>
   level2: Devient un <b>Simple croyant.</b>
   level3: "Peut prendre la place de n\u2019importe qu\u2019elle Croyant."
   level4: "Peut prendre la place de n\u2019importe qu\u2019elle carte sauf les Dieux."

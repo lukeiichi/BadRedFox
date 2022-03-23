@@ -3,7 +3,8 @@ guid: 098baf66aa501144895013fa19454bcb
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cardFromEffect: {fileID: 6481660421514042265, guid: af38ee08497b5a5418d6659c19cf9b3c, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

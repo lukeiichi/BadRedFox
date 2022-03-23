@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static Card;
 
 /*
@@ -28,6 +29,7 @@ public class CardInGame : MonoBehaviour
     public int level;
 
     private GameObject descriptionCard;
+    private GameObject cardFromEffect;
     #endregion
 
     #region Getters
@@ -51,12 +53,12 @@ public class CardInGame : MonoBehaviour
     // Trouve et initialise descriptionCard au lancement du script
     void Start(){
         descriptionCard =  GameObject.Find("CardDescription");
+        cardFromEffect =  GameObject.Find("CardFromEffect");
     }
 
     #region EditCard
     // Modifie la couleur de la carte
     public void SetColor(Color coul){
-        
         color = coul;
     }
 

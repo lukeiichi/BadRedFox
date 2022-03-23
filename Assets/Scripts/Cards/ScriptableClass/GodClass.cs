@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static Card;
 
 [CreateAssetMenu(fileName = "GodCard", menuName = "Assets/God")]
@@ -121,30 +122,30 @@ public class GodClass : Card
     //
     // La couleur ne marche pas encore (ressort le RGB)
     // La carte n'est pas encor choissit au hasard pour le level 1
-    public void DivinatriceEffect(Card target){
+    public void DivinatriceEffect(Card target, GameObject cardInGame){
         switch(this.Level){
-            case >= 7 :
+            case >= 5 :
                 Return("La carte sélectionné est " + target.Name);
                 break;
             case 4 :
                 Return("La carte sélectionné est un " + target.Type);
                 break;
             case 3 :
-                    if(target.Type == TypeEnum.God){
-                        Return("La carte sélectionné appartient à la regigion de  " + target.Name);
-                    }else if(target.Type == TypeEnum.Fidele){
-                        FideleClass fidele = target as FideleClass;
-                        Return("La carte sélectionné appartient à la regigion de  " + fidele.God.Name);
-                    }else{
-                        Return("La carte sélectionné n'appartient à aucune religion");
-                    }
-                    break;
+                if(target.Type == TypeEnum.God){
+                    Return("La carte sélectionné appartient à la regigion de  " + target.Name);
+                }else if(target.Type == TypeEnum.Fidele){
+                    FideleClass fidele = target as FideleClass;
+                    Return("La carte sélectionné appartient à la regigion de  " + fidele.God.Name);
+                }else{
+                    Return("La carte sélectionné n'appartient à aucune religion");
+                }
+                break;
             case 0 : 
-                    Return("La sorcière n'a pas réussit à utiliser son pouvoir");
-                    break;
+                Return("La sorcière n'a pas réussit à utiliser son pouvoir");
+                break;
             default :
-                    Return("La carte sélectionné appartient à la religion de couleur " + target.Color.ToString("x"));
-                    break;
+                Return("La carte sélectionné appartient à la religion de couleur " + target.Color );
+                break;
         }
     }
 
@@ -178,7 +179,11 @@ public class GodClass : Card
     public void NecromancienEffect(){}
     public void InformateurEffect(){}
     public void LeaderEffect(){}
-    public void MetamorpheEffect(){}
+    public void MetamorpheEffect(Card target, GameObject cardInGame){
+        if(target.Type == TypeEnum.God && this.Level == 5){
+            name = target.Name;
+        }
+  }
     public void ProtecteurEffect(){}
     public void GiletEffect(){}
     public void EnsorceleuseEffect(){}

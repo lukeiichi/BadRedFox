@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Random = System.Random;
 using static Card;
 
 public class CardDescription : MonoBehaviour
@@ -49,7 +50,7 @@ public class CardDescription : MonoBehaviour
         GodClass god = card as GodClass;
         switch(god.Name){
             case "La Divinatrice" : 
-                god.DivinatriceEffect(target);
+                god.DivinatriceEffect(target, cardInGame);
                 break;
             case "L'Enchanteresse" :
                 god.EnchanteresseEffect(target, cardInGame);
@@ -57,8 +58,14 @@ public class CardDescription : MonoBehaviour
             case "La Gardienne" : 
                 god.GardienneEffect(target);
                 break;
+            case "L'Imitatrice" :
+                god.ImitatriceEffect();
+                break;
+            case "Le Métamorphe" :
+                god.MetamorpheEffect(target, cardInGame);
+                break;
             default :
-                god.DivinatriceEffect(target);
+                god.MetamorpheEffect(target, cardInGame);
                 break;
         }
         /*
@@ -69,6 +76,12 @@ public class CardDescription : MonoBehaviour
     // Lorsqu'une caret est joué, vérifie de quel type il est
     public void ChooseCard(){
         HideDescription();
+        if(card.Name == "La Divinatrice"){
+            GodClass god = card as GodClass;
+            if(god.Level == 1){
+                Random rand = new Random();
+            }
+        }
             /*
             switch(god.Name){
                 case "Divinatrice":
@@ -165,5 +178,4 @@ public class CardDescription : MonoBehaviour
             effect.text = "";
         }
     }
-
 }
