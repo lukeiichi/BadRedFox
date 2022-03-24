@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+
+using static MyExtensions;
 using static Card;
 
 [CreateAssetMenu(fileName="FoxCard", menuName="Assets/Fox")]
@@ -25,13 +27,13 @@ public class FoxClass : Card
     public void Kill(GameObject cardObject, Card card){
         // Vérifie si la gardienne protège la carte
         if(card.Protected == Protection.Vulnerable){
-            Destroy(cardObject.transform.GetComponent<RawImage>());
-            Destroy(cardObject.transform.GetComponent<EventTrigger>());
+            Destroy(GetImage(cardObject));
+            Destroy(GetEventTrigger(cardObject));
 
-            UIManagerField playerVisual = GameObject.Find("PlayerVisual(Clone)").transform.GetComponent<UIManagerField>();
+            UIManagerField playerVisual = GetUIManager(GameObject.Find("PlayerVisual(Clone)"));
             playerVisual.UpdateHand(card, "dead");
 
-            GameObject.Find("DeadCardManager").transform.GetComponent<DeadCardManager>().listDeadCards.Add(card);
+            GetDeadCardManager(GameObject.Find("DeadCardManager")).listDeadCards.Add(card);
         }
         else{
             Return("La carte sélectionnée n'a pas pu être attaqué");

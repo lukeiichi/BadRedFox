@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+using static MyExtensions;
+
 public class PlayerManager : NetworkManager
 {    
     public GameObject playerField;

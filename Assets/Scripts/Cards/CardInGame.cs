@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+using static MyExtensions;
 using static Card;
 
 /*
@@ -62,6 +64,12 @@ public class CardInGame : MonoBehaviour
         color = coul;
     }
 
+    public void LevelMinus() {
+        Debug.Log("on enleve un niveau");
+        level --;
+        Debug.Log(this.Level);
+    }
+
     // Modifie les données de la carte (statut, type et niveau)
     public void SetValues(Card newCard, int i) {
         id = i;
@@ -81,7 +89,7 @@ public class CardInGame : MonoBehaviour
     public void AddDescription()
     {
         descriptionCard.SetActive(true);
-        descriptionCard.transform.GetComponent<CardDescription>().SetValues(card, id);
+        GetDescription(descriptionCard).SetValues(card, id);
     }
 
     // Fait disparaître la section Description

@@ -18,7 +18,7 @@ MonoBehaviour:
     son village."
   type: 0
   effect: 1
-  color: {r: 1, g: 0, b: 0, a: 1}
+  color: {r: 0, g: 0, b: 1, a: 1}
   isProtected: 0
   level: 5
   level1: Donne une indication peu utile.

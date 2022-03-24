@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System;
+
+using static MyExtensions;
 
 public class Card : ScriptableObject {
     #region Initialisation
@@ -75,8 +79,31 @@ public class Card : ScriptableObject {
     // Modifie la couleur de la carte reçu en gris foncé
     public void SetEffect(bool newEffect, GameObject cardInGame){  
         if(newEffect == false){
-            RawImage image = cardInGame.transform.GetComponent<RawImage>();
+            RawImage image = GetImage(cardInGame);
             image.color = new Color32(90,90,90,255);
+        }
+    }
+        // Supprime de la main et du terrain, la carte donné en paramètre et l'ajoute à la liste des morts
+        public void Die(GameObject cardObject, Card card){
+        // Vérifie si la gardienne protège la carte
+        if(card.Protected == Protection.Vulnerable){
+            UIManagerField playerVisual = GetUIManager(GameObject.Find("PlayerVisual(Clone)"));
+            if (card.Type == TypeEnum.Fidele){
+                FideleClass fidele = card as FideleClass;
+                GameObject godMinus = Array.Find(playerVisual.listCardsField, x => GetCardInGame(x).card.Name == fidele.God.Name);
+                GetCardInGame(godMinus).LevelMinus();
+            }
+            Destroy(GetImage(cardObject));
+            Destroy(GetEventTrigger(cardObject));
+            playerVisual.UpdateHand(card, "dead");
+
+            GetDeadCardManager(GameObject.Find("DeadCardManager")).listDeadCards.Add(card);
+        }
+        else{
+            Debug.Log("La carte sélectionnée n'a pas pu être attaqué");
+            if(card.Protected == Protection.OneTime){
+                card.SetProtection(Protection.Vulnerable);
+            }
         }
     }
 }

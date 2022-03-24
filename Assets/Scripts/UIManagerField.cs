@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -8,8 +9,9 @@ using Random = System.Random;
 using System.Threading.Tasks;
 using System.Linq;
 using Mirror;
+
 using static Card;
-using System;
+using static MyExtensions;
 
 public class UIManagerField : NetworkBehaviour
 {
@@ -140,22 +142,3 @@ public class UIManagerField : NetworkBehaviour
     }
     
 }
-
-#region Extensions
-// Mélange une liste
-static class MyExtensions
-{
-    private static readonly Random random = new Random();
-    public static void ShuffleCard < T > (this IList < T > list)
-    {
-        int n = list.Count;
-        while (n > 1) {
-            n--;
-            int k = random.Next(n + 1);
-            T value = list[k];
-            list[k] = list[n];
-            list[n] = value;
-        }
-    }
-}
-#endregion

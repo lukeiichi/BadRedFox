@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Random = System.Random;
+
+using static MyExtensions;
 using static Card;
 
 public class CardDescription : MonoBehaviour
@@ -16,6 +18,7 @@ public class CardDescription : MonoBehaviour
     public Step step;
 
     public GameObject cardInGame;
+    public GameObject cardPlayedInGame;
     public Card card ;
     public Card target;
     private bool choose;
@@ -26,10 +29,7 @@ public class CardDescription : MonoBehaviour
         playButton.SetActive(false);
 
         // Initialise step
-        step = GameObject
-            .Find("Rappel")
-            .transform
-            .GetComponent < Step > ();
+        step = GetStep(GameObject.Find("Rappel"));
     }
     #endregion
 
@@ -62,10 +62,10 @@ public class CardDescription : MonoBehaviour
                 god.ImitatriceEffect();
                 break;
             case "Le Métamorphe" :
-                god.MetamorpheEffect(target, cardInGame);
+                god.MetamorpheEffect(target, cardPlayedInGame, cardInGame);
                 break;
             default :
-                god.MetamorpheEffect(target, cardInGame);
+                card.Die(cardInGame, target);
                 break;
         }
         /*
@@ -113,35 +113,24 @@ public class CardDescription : MonoBehaviour
     public void SetValues(Card newCard, int id) {
         // A partir de l'id de la carte, on retrouver et associe son emplacement à cardInGame
         // En fonction de si c'est son village, associe la carte en tant que carte joué ou carte ciblé
+        GameObject newCardInGame = GetUIManager(playerVisual).listCardsField[id];
         if(step.isPlayer){
             card = newCard;
+            cardPlayedInGame = newCardInGame;
+            GodClass god = card as GodClass;
+            Debug.Log(god.Level);
         }
         else{
             target = newCard;
-            cardInGame = playerVisual.transform.GetComponent<UIManagerField>().listCardsField[id];
+            cardInGame = newCardInGame;
         }
 
         // Sélectionne toutes les zones à éditer
-        RawImage photo = GameObject
-            .Find("Image")
-            .transform
-            .GetComponent < RawImage > ();
-        Text name = GameObject
-            .Find("Name")
-            .transform
-            .GetComponent < Text > ();
-        TextMeshProUGUI desc = GameObject
-            .Find("Description")
-            .transform
-            .GetComponent < TextMeshProUGUI > ();
-        TextMeshProUGUI effect = GameObject
-            .Find("Effect")
-            .transform
-            .GetComponent < TextMeshProUGUI > ();
-        TextMeshProUGUI disciple = GameObject
-            .Find("Disciple")
-            .transform
-            .GetComponent < TextMeshProUGUI > ();
+        RawImage photo = GetImage(GameObject.Find("Image"));
+        TextMeshProUGUI name = GetText(GameObject.Find("Name"));
+        TextMeshProUGUI desc = GetText(GameObject.Find("Description"));
+        TextMeshProUGUI effect = GetText(GameObject.Find("Effect"));
+        TextMeshProUGUI disciple = GetText(GameObject.Find("Disciple"));
 
         // Edite la description 
         photo.texture = Resources.Load("Images/" + newCard.Name)as Texture2D;

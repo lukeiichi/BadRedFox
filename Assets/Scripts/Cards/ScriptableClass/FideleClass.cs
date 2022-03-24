@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "FideleCard", menuName = "Assets/Fidele")]
 public class FideleClass : Card
 {
-    public Card god;
+    public GodClass god;
 
-    public Card God {
+    public GodClass God {
         get {return god;}
     }
 
@@ -20,7 +20,7 @@ public class FideleClass : Card
         type = TypeEnum.Fidele;
     }
 
-    public void SetGod(Card newGod) {
+    public void SetGod(GodClass newGod) {
         Debug.Log("Il croira en : " + newGod);
         god = newGod;
     }

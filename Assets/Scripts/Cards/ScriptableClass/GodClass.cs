@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+using static MyExtensions;
 using static Card;
 
 [CreateAssetMenu(fileName = "GodCard", menuName = "Assets/God")]
@@ -65,14 +67,6 @@ public class GodClass : Card
         get {return disciple;}
     }
     #endregion
-
-    #region Modifications
-    // Edite le niveau de la carte
-    public void SetLevel(int lvl) {
-        level = lvl;
-    }
-    #endregion
-
     
     #region Effects
     /*
@@ -110,7 +104,7 @@ public class GodClass : Card
             target.SetEffect(false, cardInGame);
 
             // Modifie aussi la carte dans la main du joueur
-            UIManagerField playerVisual = GameObject.Find("PlayerVisual(Clone)").transform.GetComponent<UIManagerField>();
+            UIManagerField playerVisual = GetUIManager(GameObject.Find("PlayerVisual(Clone)"));
             playerVisual.UpdateHand(target, "effect");
         }else{
             Return(message);
@@ -177,13 +171,29 @@ public class GodClass : Card
 
 
     public void NecromancienEffect(){}
+
+    // Effet de l'informateur
     public void InformateurEffect(){}
-    public void LeaderEffect(){}
-    public void MetamorpheEffect(Card target, GameObject cardInGame){
-        if(target.Type == TypeEnum.God && this.Level == 5){
-            name = target.Name;
+
+    // Effet du leader
+    public void LeaderEffect(List<Card> cards, List<GameObject> cardsInGame){
+        foreach(GameObject card in cardsInGame){
+            GetImage(card).color = Color.white;
+            FideleClass fidele = GetCardInGame(card).card as FideleClass;
+            fidele.god = null;
         }
-  }
+    }
+
+    // Effet du Métamorphe
+    // Devient la carte ciblé et tue l'original
+    public void MetamorpheEffect(Card target, GameObject cardPlayedInGame, GameObject cardInGame){
+        if(target.Type == TypeEnum.God && this.Level == 5){
+            GetCardInGame(cardPlayedInGame).card = target;
+            GetImage(cardPlayedInGame).texture = Resources.Load("Images/" + target.Name) as Texture2D;
+            target.Die(cardInGame, target);
+        }
+    }
+
     public void ProtecteurEffect(){}
     public void GiletEffect(){}
     public void EnsorceleuseEffect(){}
