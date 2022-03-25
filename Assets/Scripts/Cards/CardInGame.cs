@@ -14,6 +14,7 @@ public class CardInGame : MonoBehaviour
     public Card card;
     public GameObject cardPlace;
 
+    public bool effect;
     public Color color;
     public int level;
     public string name;
@@ -30,6 +31,9 @@ public class CardInGame : MonoBehaviour
     public GameObject CardPlace{
         get{return cardPlace;}
     }
+    public bool Effect{
+        get{return effect;}
+    }
     public string Name{
         get{return name;}
     }
@@ -43,11 +47,12 @@ public class CardInGame : MonoBehaviour
 
     // Trouve et initialise descriptionCard au lancement du script
     void Start(){
-        descriptionCard =  GetGameObject("CardDescription");
-        cardFromEffect =  GetGameObject("CardFromEffect");
+        descriptionCard =  GameObject.Find("CardDescription");
+        cardFromEffect =  GameObject.Find("CardFromEffect");
     }
 
     #region EditCard
+    // Ajouter le minus
     // Modifie la couleur de la carte
     public void SetColor(Color coul){
         color = coul;
@@ -56,9 +61,17 @@ public class CardInGame : MonoBehaviour
         if(coul == Color.white){
             god = null;
         }else if(card.Type == TypeEnum.Fidele){
-            god = GetCardInGame(Array.Find(GetUIManager(GetGameObject("PlayerVisual(Clone)")).listCardsHand, x => GetCardInGame(x).Color == coul));
+            god = GetCardInGame(Array.Find(GetUIManager(GameObject.Find("PlayerVisual(Clone)")).listCardsHand, x => GetCardInGame(x).Color == coul));
         }
+    }
 
+    // Modifie la couleur de la carte reçu en gris foncé
+    public void SetEffect(bool newEffect){  
+        if(newEffect == false){
+            RawImage image = GetImage(cardPlace);
+            image.color = new Color32(90,90,90,255);
+            effect = newEffect;
+        }
     }
 
     // Retire 1 point au niveau de la carte
@@ -72,8 +85,9 @@ public class CardInGame : MonoBehaviour
         card = newCard;
 
         name = card.Name;
+        effect = true;
         if(card.Type == TypeEnum.God){
-            GodClass god = ConvertGod(card);
+            GodClass god = card as GodClass;
             level = god.Level;
         }
     }
@@ -89,7 +103,7 @@ public class CardInGame : MonoBehaviour
 
     // Fait disparaître la section Description
     public void RemoveDescription(){
-        GameObject descriptionField = GetGameObject("CardDescription");
+        GameObject descriptionField = GameObject.Find("CardDescription");
         if(descriptionField){
             descriptionField.SetActive(false);
         }   

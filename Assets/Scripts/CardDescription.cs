@@ -47,30 +47,33 @@ public class CardDescription : MonoBehaviour
         playButton.SetActive(false);
         HideDescription();
 
-        GodClass god = ConvertGod(card);
-        switch(god.Name){
-            case "La Divinatrice" : 
-                god.DivinatriceEffect(target, targetPlace, usedPlace);
-                break;
-            case "L'Enchanteresse" :
-                god.EnchanteresseEffect(target, targetPlace, usedPlace);
-                break;
-            case "La Gardienne" : 
-                god.GardienneEffect(target, usedPlace);
-                break;
-            case "L'Imitatrice" :
-                god.ImitatriceEffect();
-                break;
-            case "Le Métamorphe" :
-                god.MetamorpheEffect(target, usedPlace, targetPlace);
-                break;
-            default :
-                card.Die(targetPlace, target);
-                break;
+        // Vérifie si la carte est un renard ou un dieu
+        if(card.Type == TypeEnum.God){ 
+            GodClass god = ConvertGod(card);
+            switch(god.Name){
+                case "La Divinatrice" : 
+                    god.DivinatriceEffect(target, targetPlace, usedPlace);
+                    break;
+                case "L'Enchanteresse" :
+                    god.EnchanteresseEffect(target, targetPlace, usedPlace);
+                    break;
+                case "La Gardienne" : 
+                    god.GardienneEffect(target, usedPlace);
+                    break;
+                case "L'Imitatrice" :
+                    god.ImitatriceEffect();
+                    break;
+                case "Le Métamorphe" :
+                    god.MetamorpheEffect(target, usedPlace, targetPlace);
+                    break;
+                default :
+                    card.Die(targetPlace, target);
+                    break;
+            }
         }
-        /*
-                    GodClass god = ConvertGod(card);
-            step.isPlayer = !step.isPlayer;*/
+        else{
+            card.Die(targetPlace, target);
+        }
     }
 
     // Lorsqu'une caret est joué, vérifie de quel type il est
@@ -116,7 +119,6 @@ public class CardDescription : MonoBehaviour
         if(step.isPlayer){
             card = newCard;
             usedPlace = newCardPlace;
-            GodClass god = ConvertGod(card);
         }
         else{
             target = newCard;
@@ -135,34 +137,47 @@ public class CardDescription : MonoBehaviour
         name.text = newCard.Name;
         desc.text = newCard.Description;
 
-        // Seulement si c'est une carte Dieu
-        if(newCard.Type == TypeEnum.God){
+        // Vérifie la carte peut utiliser son effet
+        if(GetCardInGame(newCardPlace).Effect == true){
+            // Seulement si c'est une carte Dieu
+            if (newCard.Type == TypeEnum.God)
+            {
                 GodClass god = ConvertGod(card);
                 // Vérifie le niveau actuel de la carte
-                switch (GetCardInGame(newCardPlace).Level){
-                        case 1:
+                switch (GetCardInGame(newCardPlace).Level)
+                {
+                    case 1:
                         effect.text = god.Level1;
                         break;
-                        case 2:
+                    case 2:
                         effect.text = god.Level2;
                         break;
-                        case 3:
+                    case 3:
                         effect.text = god.Level3;
                         break;
-                        case 4:
+                    case 4:
                         effect.text = god.Level4;
                         break;
-                        case 5:
+                    case 5:
                         effect.text = god.Level5;
+                        break;
+                    default:
+                        effect.text = card.Name + " ne peut pas utiliser son pouvoir";
+                        chooseButton.SetActive(false);
                         break;
                 }
                 disciple.text = god.Disciple;
-        
+            }        
+            // Si ce n'est pas un dieu, effacer le texte en trop
+            else{
+                disciple.text = "";
+                effect.text = "";
+            }
         }
-        // Si ce n'est pas un dieu, effacer le texte en trop
-        else{
-            disciple.text = "";
-            effect.text = "";
+        else
+        {
+            effect.text = card.Name + " ne peut pas utiliser son pouvoir";
+            chooseButton.SetActive(false);
         }
     }
 }

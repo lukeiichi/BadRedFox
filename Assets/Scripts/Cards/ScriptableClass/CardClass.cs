@@ -25,8 +25,6 @@ public class Card : ScriptableObject {
     [TextArea]
     public string description;
     public TypeEnum type;
-
-    public bool effect = true;
     public Color color = Color.white;
 
     public Protection isProtected = Protection.Vulnerable;
@@ -56,9 +54,6 @@ public class Card : ScriptableObject {
     public string Description {
         get {return description;}
     }
-    public bool Effect {
-        get {return effect;}
-    }
     public TypeEnum Type {
         get {return type;}
     }
@@ -75,16 +70,9 @@ public class Card : ScriptableObject {
     public void SetColor(Color coul) {
         color = coul;
     }
-    
-    // Modifie la couleur de la carte reçu en gris foncé
-    public void SetEffect(bool newEffect, GameObject cardInGame){  
-        if(newEffect == false){
-            RawImage image = GetImage(cardInGame);
-            image.color = new Color32(90,90,90,255);
-        }
-    }
-        // Supprime de la main et du terrain, la carte donné en paramètre et l'ajoute à la liste des morts
-        public void Die(GameObject cardObject, Card card){
+
+    // Supprime de la main et du terrain, la carte donné en paramètre et l'ajoute à la liste des morts
+    public void Die(GameObject cardObject, Card card){
         // Vérifie si la gardienne protège la carte
         if(card.Protected == Protection.Vulnerable){
             UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));

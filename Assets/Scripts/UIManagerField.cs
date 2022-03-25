@@ -36,7 +36,7 @@ public class UIManagerField : NetworkBehaviour
         }else if(reason == "levelMinus"){
                 GetCardInGame(cardFound).LevelMinus();
         }else{
-            updatedCard.SetEffect(false, cardFound);
+            GetCardInGame(cardFound).SetEffect(false);
         }
     }
 

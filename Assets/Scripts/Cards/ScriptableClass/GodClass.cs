@@ -96,12 +96,11 @@ public class GodClass : Card
         string message = "La carte n'a pas pû être neutralisé car elle ne possède aucun pouvoir ou est trop forte pour vote sorcière.";
         if(target.Name != "Fidèle"){
             if(target.Type == TypeEnum.God){
-                GodClass god = target as GodClass;
                 if(GetCardInGame(usedPlace).Level > GetCardInGame(targetPlace).Level){
                     Return(message);
                 }
             }
-            target.SetEffect(false, targetPlace);
+            GetCardInGame(targetPlace).SetEffect(false);
 
             // Modifie aussi la carte dans la main du joueur
             UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
