@@ -24,15 +24,17 @@ public class UIManagerField : NetworkBehaviour
 
     // Modifie l'état des cartes situé dans la main du joueur
     public void UpdateHand(Card updatedCard, string reason){
-        GameObject cardFound = Array.Find(listCardsHand, x => x.transform.GetComponent<CardInGame>().card.Name == updatedCard.Name);
+        GameObject cardFound = Array.Find(listCardsHand, x => GetCardInGame(x).Name == updatedCard.Name);
         if (reason == "dead"){
             if (updatedCard.Type == TypeEnum.Fidele){
-                cardFound.transform.GetComponent<Number>().Kill();
+                GetNumber(cardFound).Kill();
             }else{
-            Destroy(cardFound.transform.GetComponent<RawImage>());
-            Destroy(cardFound.transform.GetComponent<EventTrigger>());
+                Destroy(GetImage(cardFound));
+                Destroy(GetEventTrigger(cardFound));
             }
 
+        }else if(reason == "levelMinus"){
+                GetCardInGame(cardFound).LevelMinus();
         }else{
             updatedCard.SetEffect(false, cardFound);
         }
@@ -49,10 +51,7 @@ public class UIManagerField : NetworkBehaviour
 
         #region CardManager
         // Récupère toutes les cartes du CardManager
-        CardManager cardManager = GameObject
-            .Find("CardManager")
-            .transform
-            .GetComponent < CardManager > ();
+        CardManager cardManager = GetCardManager(GetGameObject("CardManager"));
 
         // Récupère la carte villageois, renard et les cartes dieux
         Card villageois = cardManager
@@ -119,23 +118,18 @@ public class UIManagerField : NetworkBehaviour
         Card card = cards[number];
         card.SetColor(colors[i]);
         cards.Remove(card);
-        GameObject
-            .Find("CardManager")
-            .transform
-            .GetComponent < CardManager > ()
-            .cards
-            .Remove(card);
+        GetCardManager(GetGameObject("CardManager")).cards.Remove(card);
         return card;
     }
 
     // Ajoute une image aux cartes créées url : L'url de l'image carte : La carte a
     // éditer
     private void GetTextureCoroutine(Card card, GameObject cardPlace, Color colorCard, int i) {
-        CardInGame cardInGame = cardPlace.transform.GetComponent < CardInGame > ();
-        cardInGame.SetValues(card, i);
+        CardInGame cardInGame = GetCardInGame(cardPlace);
+        cardInGame.SetValues(card, cardPlace);
         cardInGame.SetColor(colorCard);
 
-        RawImage rawImage = cardPlace.transform.GetComponent < RawImage > ();
+        RawImage rawImage = GetImage(cardPlace);
         rawImage.color = cardInGame.Color;
 
         rawImage.texture = Resources.Load("Images/" + cardInGame.card.Name)as Texture2D;

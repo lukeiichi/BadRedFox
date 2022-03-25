@@ -1,48 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 using static MyExtensions;
 using static Card;
 
-/*
-Pensez à enlever tout les trucs qui servent a rien
-les donnes
-statut
-color
-etc
-..
-..
-..
-..
-*/
-
 public class CardInGame : MonoBehaviour
 {
     #region Initialisation
-    public int id;
     [SerializeField]
     public Card card;
+    public GameObject cardPlace;
 
-    public bool effect;
-    public TypeEnum type;
     public Color color;
     public int level;
+    public string name;
+    public CardInGame god;
 
     private GameObject descriptionCard;
     private GameObject cardFromEffect;
     #endregion
 
     #region Getters
-    public int Id{
-        get{return id;}
+    public CardInGame God{
+        get{return god;}
     }
-    public bool Effect {
-        get {return effect;}
+    public GameObject CardPlace{
+        get{return cardPlace;}
     }
-    public Card.TypeEnum Type {
-        get {return type;}
+    public string Name{
+        get{return name;}
     }
     public Color Color {
         get {return color;}
@@ -54,31 +43,37 @@ public class CardInGame : MonoBehaviour
 
     // Trouve et initialise descriptionCard au lancement du script
     void Start(){
-        descriptionCard =  GameObject.Find("CardDescription");
-        cardFromEffect =  GameObject.Find("CardFromEffect");
+        descriptionCard =  GetGameObject("CardDescription");
+        cardFromEffect =  GetGameObject("CardFromEffect");
     }
 
     #region EditCard
     // Modifie la couleur de la carte
     public void SetColor(Color coul){
         color = coul;
+
+        // Associe le fidèle au bon Dieu de sa croyance
+        if(coul == Color.white){
+            god = null;
+        }else if(card.Type == TypeEnum.Fidele){
+            god = GetCardInGame(Array.Find(GetUIManager(GetGameObject("PlayerVisual(Clone)")).listCardsHand, x => GetCardInGame(x).Color == coul));
+        }
+
     }
 
+    // Retire 1 point au niveau de la carte
     public void LevelMinus() {
-        Debug.Log("on enleve un niveau");
         level --;
-        Debug.Log(this.Level);
     }
 
     // Modifie les données de la carte (statut, type et niveau)
-    public void SetValues(Card newCard, int i) {
-        id = i;
+    public void SetValues(Card newCard, GameObject newCardPlace) {
+        cardPlace = newCardPlace;
         card = newCard;
 
-        effect = card.Effect;
-        type = card.Type;
+        name = card.Name;
         if(card.Type == TypeEnum.God){
-            GodClass god = card as GodClass;
+            GodClass god = ConvertGod(card);
             level = god.Level;
         }
     }
@@ -89,12 +84,12 @@ public class CardInGame : MonoBehaviour
     public void AddDescription()
     {
         descriptionCard.SetActive(true);
-        GetDescription(descriptionCard).SetValues(card, id);
+        GetDescription(descriptionCard).SetValues(card, cardPlace);
     }
 
     // Fait disparaître la section Description
     public void RemoveDescription(){
-        GameObject descriptionField = GameObject.Find("CardDescription");
+        GameObject descriptionField = GetGameObject("CardDescription");
         if(descriptionField){
             descriptionField.SetActive(false);
         }   

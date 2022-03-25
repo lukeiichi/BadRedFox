@@ -68,5 +68,8 @@ static class MyExtensions
         return card as FoxClass;
     }
 
-    //Ajouter les gameobject.Find + god as god
+    // Récupère le GameObject mit en paramètre
+    public static GameObject GetGameObject(string gameobject){
+        return GameObject.Find(gameobject);
+    }
 }

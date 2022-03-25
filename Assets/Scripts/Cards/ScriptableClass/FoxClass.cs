@@ -30,10 +30,10 @@ public class FoxClass : Card
             Destroy(GetImage(cardObject));
             Destroy(GetEventTrigger(cardObject));
 
-            UIManagerField playerVisual = GetUIManager(GameObject.Find("PlayerVisual(Clone)"));
+            UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
             playerVisual.UpdateHand(card, "dead");
 
-            GetDeadCardManager(GameObject.Find("DeadCardManager")).listDeadCards.Add(card);
+            GetDeadCardManager(GetGameObject("DeadCardManager")).listDeadCards.Add(card);
         }
         else{
             Return("La carte sélectionnée n'a pas pu être attaqué");

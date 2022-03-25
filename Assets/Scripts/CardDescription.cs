@@ -17,8 +17,8 @@ public class CardDescription : MonoBehaviour
     public GameObject playButton;
     public Step step;
 
-    public GameObject cardInGame;
-    public GameObject cardPlayedInGame;
+    public GameObject targetPlace;
+    public GameObject usedPlace;
     public Card card ;
     public Card target;
     private bool choose;
@@ -29,13 +29,13 @@ public class CardDescription : MonoBehaviour
         playButton.SetActive(false);
 
         // Initialise step
-        step = GetStep(GameObject.Find("Rappel"));
+        step = GetStep(GetGameObject("Rappel"));
     }
     #endregion
 
     // Cache la section description
     public void HideDescription(){
-        GameObject.Find("CardDescription").SetActive(false);
+        GetGameObject("CardDescription").SetActive(false);
     }
 
     #region Play a Card
@@ -47,29 +47,29 @@ public class CardDescription : MonoBehaviour
         playButton.SetActive(false);
         HideDescription();
 
-        GodClass god = card as GodClass;
+        GodClass god = ConvertGod(card);
         switch(god.Name){
             case "La Divinatrice" : 
-                god.DivinatriceEffect(target, cardInGame);
+                god.DivinatriceEffect(target, targetPlace, usedPlace);
                 break;
             case "L'Enchanteresse" :
-                god.EnchanteresseEffect(target, cardInGame);
+                god.EnchanteresseEffect(target, targetPlace, usedPlace);
                 break;
             case "La Gardienne" : 
-                god.GardienneEffect(target);
+                god.GardienneEffect(target, usedPlace);
                 break;
             case "L'Imitatrice" :
                 god.ImitatriceEffect();
                 break;
             case "Le Métamorphe" :
-                god.MetamorpheEffect(target, cardPlayedInGame, cardInGame);
+                god.MetamorpheEffect(target, usedPlace, targetPlace);
                 break;
             default :
-                card.Die(cardInGame, target);
+                card.Die(targetPlace, target);
                 break;
         }
         /*
-                    GodClass god = card as GodClass;
+                    GodClass god = ConvertGod(card);
             step.isPlayer = !step.isPlayer;*/
     }
 
@@ -77,8 +77,8 @@ public class CardDescription : MonoBehaviour
     public void ChooseCard(){
         HideDescription();
         if(card.Name == "La Divinatrice"){
-            GodClass god = card as GodClass;
-            if(god.Level == 1){
+            GodClass god = ConvertGod(card);
+            if(GetCardInGame(usedPlace).Level == 1){
                 Random rand = new Random();
             }
         }
@@ -110,27 +110,25 @@ public class CardDescription : MonoBehaviour
     }
     #endregion
 
-    public void SetValues(Card newCard, int id) {
+    public void SetValues(Card newCard, GameObject newCardPlace) {
         // A partir de l'id de la carte, on retrouver et associe son emplacement à cardInGame
         // En fonction de si c'est son village, associe la carte en tant que carte joué ou carte ciblé
-        GameObject newCardInGame = GetUIManager(playerVisual).listCardsField[id];
         if(step.isPlayer){
             card = newCard;
-            cardPlayedInGame = newCardInGame;
-            GodClass god = card as GodClass;
-            Debug.Log(god.Level);
+            usedPlace = newCardPlace;
+            GodClass god = ConvertGod(card);
         }
         else{
             target = newCard;
-            cardInGame = newCardInGame;
+            targetPlace = newCardPlace;
         }
 
         // Sélectionne toutes les zones à éditer
-        RawImage photo = GetImage(GameObject.Find("Image"));
-        TextMeshProUGUI name = GetText(GameObject.Find("Name"));
-        TextMeshProUGUI desc = GetText(GameObject.Find("Description"));
-        TextMeshProUGUI effect = GetText(GameObject.Find("Effect"));
-        TextMeshProUGUI disciple = GetText(GameObject.Find("Disciple"));
+        RawImage photo = GetImage(GetGameObject("Image"));
+        TextMeshProUGUI name = GetText(GetGameObject("Name"));
+        TextMeshProUGUI desc = GetText(GetGameObject("Description"));
+        TextMeshProUGUI effect = GetText(GetGameObject("Effect"));
+        TextMeshProUGUI disciple = GetText(GetGameObject("Disciple"));
 
         // Edite la description 
         photo.texture = Resources.Load("Images/" + newCard.Name)as Texture2D;
@@ -139,9 +137,9 @@ public class CardDescription : MonoBehaviour
 
         // Seulement si c'est une carte Dieu
         if(newCard.Type == TypeEnum.God){
-                GodClass god = newCard as GodClass;
+                GodClass god = ConvertGod(card);
                 // Vérifie le niveau actuel de la carte
-                switch (god.Level){
+                switch (GetCardInGame(newCardPlace).Level){
                         case 1:
                         effect.text = god.Level1;
                         break;

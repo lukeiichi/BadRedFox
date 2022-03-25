@@ -87,20 +87,26 @@ public class Card : ScriptableObject {
         public void Die(GameObject cardObject, Card card){
         // Vérifie si la gardienne protège la carte
         if(card.Protected == Protection.Vulnerable){
-            UIManagerField playerVisual = GetUIManager(GameObject.Find("PlayerVisual(Clone)"));
+            UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
             if (card.Type == TypeEnum.Fidele){
-                FideleClass fidele = card as FideleClass;
-                GameObject godMinus = Array.Find(playerVisual.listCardsField, x => GetCardInGame(x).card.Name == fidele.God.Name);
+                FideleClass fidele = ConvertFidele(card);
+                GameObject godMinus = Array.Find(playerVisual.listCardsField, x => GetCardInGame(x).Name == GetCardInGame(cardObject).God.Name);
+                
+                // Retire un niveau au dieu du croyant
                 GetCardInGame(godMinus).LevelMinus();
+                playerVisual.UpdateHand(GetCardInGame(godMinus).card, "levelMinus");
             }
+            // Retire l'image de la carte
             Destroy(GetImage(cardObject));
             Destroy(GetEventTrigger(cardObject));
             playerVisual.UpdateHand(card, "dead");
 
-            GetDeadCardManager(GameObject.Find("DeadCardManager")).listDeadCards.Add(card);
+            // Ajoute la carte à la liste des morts
+            GetDeadCardManager(GetGameObject("DeadCardManager")).listDeadCards.Add(card);
         }
         else{
             Debug.Log("La carte sélectionnée n'a pas pu être attaqué");
+            // Retire le statut de protection s'il ne marchait qu'une seule fois
             if(card.Protected == Protection.OneTime){
                 card.SetProtection(Protection.Vulnerable);
             }

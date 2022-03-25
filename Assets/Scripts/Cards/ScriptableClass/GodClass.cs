@@ -91,20 +91,20 @@ public class GodClass : Card
     // Renvoie un message si aucune des conditions n'est remplies 
 
     //Vérifier quel village on vise
-    public void EnchanteresseEffect(Card target, GameObject cardInGame){
+    public void EnchanteresseEffect(Card target, GameObject targetPlace, GameObject usedPlace){
         // Prédéfinit le message d'erreur à envoyer
         string message = "La carte n'a pas pû être neutralisé car elle ne possède aucun pouvoir ou est trop forte pour vote sorcière.";
         if(target.Name != "Fidèle"){
             if(target.Type == TypeEnum.God){
                 GodClass god = target as GodClass;
-                if(god.Level > this.Level){
+                if(GetCardInGame(usedPlace).Level > GetCardInGame(targetPlace).Level){
                     Return(message);
                 }
             }
-            target.SetEffect(false, cardInGame);
+            target.SetEffect(false, targetPlace);
 
             // Modifie aussi la carte dans la main du joueur
-            UIManagerField playerVisual = GetUIManager(GameObject.Find("PlayerVisual(Clone)"));
+            UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
             playerVisual.UpdateHand(target, "effect");
         }else{
             Return(message);
@@ -116,8 +116,8 @@ public class GodClass : Card
     //
     // La couleur ne marche pas encore (ressort le RGB)
     // La carte n'est pas encor choissit au hasard pour le level 1
-    public void DivinatriceEffect(Card target, GameObject cardInGame){
-        switch(this.Level){
+    public void DivinatriceEffect(Card target, GameObject targetPlace, GameObject usedPlace){
+        switch(GetCardInGame(usedPlace).Level){
             case >= 5 :
                 Return("La carte sélectionné est " + target.Name);
                 break;
@@ -128,8 +128,7 @@ public class GodClass : Card
                 if(target.Type == TypeEnum.God){
                     Return("La carte sélectionné appartient à la regigion de  " + target.Name);
                 }else if(target.Type == TypeEnum.Fidele){
-                    FideleClass fidele = target as FideleClass;
-                    Return("La carte sélectionné appartient à la regigion de  " + fidele.God.Name);
+                    Return("La carte sélectionné appartient à la regigion de  " + GetCardInGame(targetPlace).God.Name);
                 }else{
                     Return("La carte sélectionné n'appartient à aucune religion");
                 }
@@ -149,8 +148,8 @@ public class GodClass : Card
     // Ajouter un effet visuel sur la carte
     // Manque l'effet au niveau 5 
     // Indiquer au joueur le possedant que le bouclier a sauté 
-    public void GardienneEffect(Card card){
-        switch(this.Level){
+    public void GardienneEffect(Card card, GameObject usedPlace){
+        switch(GetCardInGame(usedPlace).Level){
             case >= 5:/*
                 List<Card> protectedCard = deck.FindAll(delegate(Card x){return x.Color == card.Color;});
                 foreach(Card nonProtectedCard in protectedCard){
@@ -176,21 +175,20 @@ public class GodClass : Card
     public void InformateurEffect(){}
 
     // Effet du leader
-    public void LeaderEffect(List<Card> cards, List<GameObject> cardsInGame){
-        foreach(GameObject card in cardsInGame){
-            GetImage(card).color = Color.white;
-            FideleClass fidele = GetCardInGame(card).card as FideleClass;
-            fidele.god = null;
+    public void LeaderEffect(List<Card> listTarget, List<GameObject> targetPlaces){
+        foreach(GameObject place in targetPlaces){
+            GetImage(place).color = Color.white;
+            GetCardInGame(place).SetColor(Color.white);
         }
     }
 
     // Effet du Métamorphe
     // Devient la carte ciblé et tue l'original
-    public void MetamorpheEffect(Card target, GameObject cardPlayedInGame, GameObject cardInGame){
+    public void MetamorpheEffect(Card target, GameObject usedPlace, GameObject targetPlace){
         if(target.Type == TypeEnum.God && this.Level == 5){
-            GetCardInGame(cardPlayedInGame).card = target;
-            GetImage(cardPlayedInGame).texture = Resources.Load("Images/" + target.Name) as Texture2D;
-            target.Die(cardInGame, target);
+            GetCardInGame(usedPlace).card = target;
+            GetImage(usedPlace).texture = Resources.Load("Images/" + target.Name) as Texture2D;
+            target.Die(targetPlace, target);
         }
     }
 
