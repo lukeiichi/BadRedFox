@@ -18,32 +18,4 @@ public class FoxClass : Card
 
         type = TypeEnum.Fox;
     }
-
-    // Effet du renard
-    // Supprime les composant image et event de la carte tué
-    // Appel aussi la fonction update de la main du joueur visé
-    //
-    //Sait pas encore quel joueur on vise
-    public void Kill(GameObject cardObject, Card card){
-        // Vérifie si la gardienne protège la carte
-        if(card.Protected == Protection.Vulnerable){
-            Destroy(GetImage(cardObject));
-            Destroy(GetEventTrigger(cardObject));
-
-            UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
-            playerVisual.UpdateHand(card, "dead");
-
-            GetDeadCardManager(GetGameObject("DeadCardManager")).listDeadCards.Add(card);
-        }
-        else{
-            Return("La carte sélectionnée n'a pas pu être attaqué");
-            if(card.Protected == Protection.OneTime){
-                card.SetProtection(Protection.Vulnerable);
-            }
-        }
-    }
-
-    private void Return(string message){
-        Debug.Log(message);
-    }
 }

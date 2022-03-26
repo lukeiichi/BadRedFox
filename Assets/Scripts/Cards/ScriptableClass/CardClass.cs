@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
+using static CardInGame;
 using static MyExtensions;
 
 public class Card : ScriptableObject {
@@ -14,11 +15,6 @@ public class Card : ScriptableObject {
         Fidele,
         Fox
     }
-    public enum Protection{
-        Vulnerable,
-        Protected,
-        OneTime
-    }
 
     public int id;
     public string name;
@@ -26,8 +22,6 @@ public class Card : ScriptableObject {
     public string description;
     public TypeEnum type;
     public Color color = Color.white;
-
-    public Protection isProtected = Protection.Vulnerable;
 
     /* Initialisation de la carte
     Fonction qui donne toutes les informations à la carte
@@ -42,9 +36,6 @@ public class Card : ScriptableObject {
     #endregion
 
     #region Getters
-    public Protection Protected{
-        get {return isProtected;}
-    }
     public int Id {
         get {return id;}
     }
@@ -62,23 +53,19 @@ public class Card : ScriptableObject {
     }
     #endregion
 
-    // Edite la protection de la carte
-    public void SetProtection(Protection protection){
-        isProtected = protection;
-    }
     // Edite la couleur de la carte 
     public void SetColor(Color coul) {
         color = coul;
     }
 
     // Supprime de la main et du terrain, la carte donné en paramètre et l'ajoute à la liste des morts
-    public void Die(GameObject cardObject, Card card){
+    public void Die(GameObject cardObject, Card card, CardInGame cardPlace){
         // Vérifie si la gardienne protège la carte
-        if(card.Protected == Protection.Vulnerable){
+        if(cardPlace.Protected == Protection.Vulnerable){
             UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
             if (card.Type == TypeEnum.Fidele){
                 FideleClass fidele = ConvertFidele(card);
-                GameObject godMinus = Array.Find(playerVisual.listCardsField, x => GetCardInGame(x).Name == GetCardInGame(cardObject).God.Name);
+                GameObject godMinus = Array.Find(playerVisual.listCardsField, x => GetCardInGame(x).Name == cardPlace.God.Name);
                 
                 // Retire un niveau au dieu du croyant
                 GetCardInGame(godMinus).LevelMinus();
@@ -95,8 +82,8 @@ public class Card : ScriptableObject {
         else{
             Debug.Log("La carte sélectionnée n'a pas pu être attaqué");
             // Retire le statut de protection s'il ne marchait qu'une seule fois
-            if(card.Protected == Protection.OneTime){
-                card.SetProtection(Protection.Vulnerable);
+            if(cardPlace.Protected == Protection.OneTime){
+                cardPlace.SetProtection(Protection.Vulnerable);
             }
         }
     }

@@ -9,6 +9,12 @@ using static Card;
 
 public class CardInGame : MonoBehaviour
 {
+    public enum Protection{
+        Vulnerable,
+        Protected,
+        OneTime
+    }
+
     #region Initialisation
     [SerializeField]
     public Card card;
@@ -19,12 +25,16 @@ public class CardInGame : MonoBehaviour
     public int level;
     public string name;
     public CardInGame god;
+    public Protection isProtected = Protection.Vulnerable;
 
     private GameObject descriptionCard;
     private GameObject cardFromEffect;
     #endregion
 
     #region Getters
+    public Protection Protected{
+        get {return isProtected;}
+    }
     public CardInGame God{
         get{return god;}
     }
@@ -52,6 +62,10 @@ public class CardInGame : MonoBehaviour
     }
 
     #region EditCard
+    // Edite la protection de la carte
+    public void SetProtection(Protection protection){
+        isProtected = protection;
+    }
     // Ajouter le minus
     // Modifie la couleur de la carte
     public void SetColor(Color coul){
@@ -65,7 +79,7 @@ public class CardInGame : MonoBehaviour
         }
     }
 
-    // Modifie la couleur de la carte reçu en gris foncé
+    // Modifie la couleur de la carte reçu en gris foncé et annule son effet
     public void SetEffect(bool newEffect){  
         if(newEffect == false){
             RawImage image = GetImage(cardPlace);

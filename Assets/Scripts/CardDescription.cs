@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Random = System.Random;
 
+using static Step;
 using static MyExtensions;
 using static Card;
 
@@ -21,12 +22,10 @@ public class CardDescription : MonoBehaviour
     public GameObject usedPlace;
     public Card card ;
     public Card target;
-    private bool choose;
 
     void Start(){
-        // Cache la description en entréé de jeu
         HideDescription();
-        playButton.SetActive(false);
+        ChangeButton(false, true);
 
         // Initialise step
         step = GetStep(GetGameObject("Rappel"));
@@ -41,10 +40,8 @@ public class CardDescription : MonoBehaviour
     #region Play a Card
     public void PlayCard(){
         // Repasser à l'étape de sélection du jeu
-        step.isPlayer = !step.isPlayer;
-        step.ChangeText("Choisis une carte à jouer");
-        chooseButton.SetActive(true);
-        playButton.SetActive(false);
+        step.NextStep();
+        ChangeButton(false, true);
         HideDescription();
 
         // Vérifie si la carte est un renard ou un dieu
@@ -58,7 +55,7 @@ public class CardDescription : MonoBehaviour
                     god.EnchanteresseEffect(target, targetPlace, usedPlace);
                     break;
                 case "La Gardienne" : 
-                    god.GardienneEffect(target, usedPlace);
+                    god.GardienneEffect(target, GetCardInGame(targetPlace));
                     break;
                 case "L'Imitatrice" :
                     god.ImitatriceEffect();
@@ -67,12 +64,12 @@ public class CardDescription : MonoBehaviour
                     god.MetamorpheEffect(target, usedPlace, targetPlace);
                     break;
                 default :
-                    card.Die(targetPlace, target);
+                    card.Die(targetPlace, target, GetCardInGame(targetPlace));
                     break;
             }
         }
         else{
-            card.Die(targetPlace, target);
+            card.Die(targetPlace, target, GetCardInGame(targetPlace));
         }
     }
 
@@ -103,16 +100,19 @@ public class CardDescription : MonoBehaviour
             // Debug.Log(deadCards.transform.GetComponent<DeadCardManager>().GetRandomCard());
 
             // Change le texte du rappel de l'étape
-            step.ChangeText("Choisis une carte à cibler");
+            step.NextStep();
                 
             /* PLUS QUE PROVISOIRE !! */
             step.isPlayer = !step.isPlayer;
-            chooseButton.SetActive(false);
-            playButton.SetActive(true);
-            /* PLUS QUE PORVISOIRE !! */
+            ChangeButton(true, false);
+        /* PLUS QUE PORVISOIRE !! */
     }
     #endregion
 
+    private void ChangeButton(bool playBool, bool chooseBool){
+        playButton.SetActive(playBool);
+        chooseButton.SetActive(chooseBool);
+    }
     public void SetValues(Card newCard, GameObject newCardPlace) {
         // A partir de l'id de la carte, on retrouver et associe son emplacement à cardInGame
         // En fonction de si c'est son village, associe la carte en tant que carte joué ou carte ciblé
@@ -138,7 +138,7 @@ public class CardDescription : MonoBehaviour
         desc.text = newCard.Description;
 
         // Vérifie la carte peut utiliser son effet
-        if(GetCardInGame(newCardPlace).Effect == true){
+        if(GetCardInGame(newCardPlace).Effect){
             // Seulement si c'est une carte Dieu
             if (newCard.Type == TypeEnum.God)
             {
@@ -163,7 +163,7 @@ public class CardDescription : MonoBehaviour
                         break;
                     default:
                         effect.text = card.Name + " ne peut pas utiliser son pouvoir";
-                        chooseButton.SetActive(false);
+                        ChangeButton(false, false);
                         break;
                 }
                 disciple.text = god.Disciple;
@@ -177,7 +177,7 @@ public class CardDescription : MonoBehaviour
         else
         {
             effect.text = card.Name + " ne peut pas utiliser son pouvoir";
-            chooseButton.SetActive(false);
+            ChangeButton(false, false);
         }
     }
 }

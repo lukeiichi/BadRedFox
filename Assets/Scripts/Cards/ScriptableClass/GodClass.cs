@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using static MyExtensions;
 using static Card;
+using static CardInGame;
 
 [CreateAssetMenu(fileName = "GodCard", menuName = "Assets/God")]
 public class GodClass : Card
@@ -125,9 +126,9 @@ public class GodClass : Card
                 break;
             case 3 :
                 if(target.Type == TypeEnum.God){
-                    Return("La carte sélectionné appartient à la regigion de  " + target.Name);
+                    Return("La carte sélectionné appartient à la regigion de " + target.Name);
                 }else if(target.Type == TypeEnum.Fidele){
-                    Return("La carte sélectionné appartient à la regigion de  " + GetCardInGame(targetPlace).God.Name);
+                    Return("La carte sélectionné appartient à la regigion de " + GetCardInGame(targetPlace).God.Name);
                 }else{
                     Return("La carte sélectionné n'appartient à aucune religion");
                 }
@@ -147,8 +148,8 @@ public class GodClass : Card
     // Ajouter un effet visuel sur la carte
     // Manque l'effet au niveau 5 
     // Indiquer au joueur le possedant que le bouclier a sauté 
-    public void GardienneEffect(Card card, GameObject usedPlace){
-        switch(GetCardInGame(usedPlace).Level){
+    public void GardienneEffect(Card card, CardInGame cardInGame){
+        switch(cardInGame.Level){
             case >= 5:/*
                 List<Card> protectedCard = deck.FindAll(delegate(Card x){return x.Color == card.Color;});
                 foreach(Card nonProtectedCard in protectedCard){
@@ -156,13 +157,13 @@ public class GodClass : Card
                 }*/
                 break;
             case 3:
-                card.SetProtection(Protection.OneTime);
+                cardInGame.SetProtection(Protection.OneTime);
                 break;
             case 0 :
                 Return("La Gardienne n'a pas réussit à utiliser son pouvoir");
                 break;
             default :
-                    card.SetProtection(Protection.Protected);
+                    cardInGame.SetProtection(Protection.Protected);
                 break;
         }
     }
@@ -187,7 +188,7 @@ public class GodClass : Card
         if(target.Type == TypeEnum.God && this.Level == 5){
             GetCardInGame(usedPlace).card = target;
             GetImage(usedPlace).texture = Resources.Load("Images/" + target.Name) as Texture2D;
-            target.Die(targetPlace, target);
+            target.Die(targetPlace, target, GetCardInGame(targetPlace));
         }
     }
 
