@@ -21,22 +21,30 @@ public class UIManagerField : NetworkBehaviour
     public GameObject[] listCardsHand;
 
     private static readonly Random random = new Random();
+    private List < Color > listColors = new List < Color > () {new Color(1f,0.5f,0.5f,1f), new Color(0.5f,1f,0.5f,1f), new Color(0.5f,0.5f,1f,1f), new Color(0.9f,1f,0.5f,1f)};
 
     // Modifie l'état des cartes situé dans la main du joueur
-    public void UpdateHand(Card updatedCard, string reason){
+    public void UpdateHand(Card updatedCard, string reason, Card target){
         GameObject cardFound = Array.Find(listCardsHand, x => GetCardInGame(x).Name == updatedCard.Name);
-        if (reason == "dead"){
-            if (updatedCard.Type == TypeEnum.Fidele){
-                GetNumber(cardFound).Kill();
-            }else{
-                Destroy(GetImage(cardFound));
-                Destroy(GetEventTrigger(cardFound));
-            }
-
-        }else if(reason == "levelMinus"){
+        switch (reason){
+            case "dead":
+                if (updatedCard.Type == TypeEnum.Fidele){
+                    GetNumber(cardFound).Kill();
+                }else{
+                    Destroy(GetImage(cardFound));
+                    Destroy(GetEventTrigger(cardFound));
+                }
+                break;
+            case "levelMinus":
                 GetCardInGame(cardFound).LevelMinus();
-        }else{
-            GetCardInGame(cardFound).SetEffect(false);
+                break;
+            case "effect":
+                GetCardInGame(cardFound).SetEffect(false);
+                break;
+            default:
+                GetCardInGame(cardFound).card = target;
+                GetImage(cardFound).texture = Resources.Load("Images/" + target.Name) as Texture2D;
+                break;
         }
     }
 
@@ -56,10 +64,10 @@ public class UIManagerField : NetworkBehaviour
         // Récupère la carte villageois, renard et les cartes dieux
         Card villageois = cardManager
             .cards
-            .Find(x => x.Name == "Fidèle");
+            .Find(x => x.Name == "Le Fidèle");
         Card renard = cardManager
             .cards
-            .Find(x => x.Name == "Fox");
+            .Find(x => x.Name == "L'Apprenti");
         List < Card > gods = cardManager
             .cards
             .FindAll(x => x.Type.ToString() == TypeEnum.God.ToString());
@@ -77,10 +85,10 @@ public class UIManagerField : NetworkBehaviour
 
         // Ajoute des images aux cartes de la main autre que fidèle
         for (var i = 0; i < PlayerManager.listCard.Count; i++) {
-            GetTextureCoroutine(PlayerManager.listCard[i], listCardsHand[i], PlayerManager.listCard[i].Color, -1);
+            GetTextureCoroutine(PlayerManager.listCard[i], listCardsHand[i], PlayerManager.listCard[i].Color);
         }
         // Ajoute l'image et la texte du villageois dans la main
-        GetTextureCoroutine(villageois, listCardsHand[5], Color.white, -1);
+        GetTextureCoroutine(villageois, listCardsHand[5], Color.white);
 
         //Ajoute 20 cartes villageois
         for (var i = 0; i < 20; i++) {
@@ -91,10 +99,10 @@ public class UIManagerField : NetworkBehaviour
         // Ajoute des images aux cartes du terrain
         List < Color > colorGod = new List < Color > ();
         for (var i = 0; i < 5; i++) {
-            colorGod.Add(Color.red);
-            colorGod.Add(Color.yellow);
-            colorGod.Add(Color.green);
-            colorGod.Add(Color.blue);
+            colorGod.Add(new Color(1f,0.5f,0.5f,1f));
+            colorGod.Add(new Color(0.5f,0.5f,1f,1f));
+            colorGod.Add(new Color(0.5f,1f,0.5f,1f));
+            colorGod.Add(new Color(0.9f,1f,0.5f,1f));
         }
         colorGod.ShuffleCard();
         for (var i = 0; i < 25; i++) {
@@ -106,17 +114,17 @@ public class UIManagerField : NetworkBehaviour
             } else if (PlayerManager.listCard[i].Type == Card.TypeEnum.God) {
                 colorCard = PlayerManager.listCard[i].Color;
             }
-            GetTextureCoroutine(PlayerManager.listCard[i], listCardsField[i], colorCard, i);
+            GetTextureCoroutine(PlayerManager.listCard[i], listCardsField[i], colorCard);
         }
         #endregion
     }
     // Récupère 1 carte dieux et le supprime de la liste pour pas être pioché 2 fois
     private Card GetGods(List < Card > cards, int i) {
-        List < Color > colors = new List < Color > () {Color.red, Color.green, Color.blue, Color.yellow};
+        
         int number = (random.Next(cards.Count));
 
         Card card = cards[number];
-        card.SetColor(colors[i]);
+        card.SetColor(listColors[i]);
         cards.Remove(card);
         GetCardManager(GetGameObject("CardManager")).cards.Remove(card);
         return card;
@@ -124,14 +132,15 @@ public class UIManagerField : NetworkBehaviour
 
     // Ajoute une image aux cartes créées url : L'url de l'image carte : La carte a
     // éditer
-    private void GetTextureCoroutine(Card card, GameObject cardPlace, Color colorCard, int i) {
+    private void GetTextureCoroutine(Card card, GameObject cardPlace, Color colorCard) {
+        // Définit les données et la couleur de cardInGame 
         CardInGame cardInGame = GetCardInGame(cardPlace);
         cardInGame.SetValues(card, cardPlace);
         cardInGame.SetColor(colorCard);
 
+        // Modifie la couleur et l'image du GameObject
         RawImage rawImage = GetImage(cardPlace);
         rawImage.color = cardInGame.Color;
-
         rawImage.texture = Resources.Load("Images/" + cardInGame.card.Name)as Texture2D;
     }
     

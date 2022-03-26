@@ -15,7 +15,7 @@ public class FideleClass : Card
     public FideleClass(int Id, string Name, string Description) {
         id = Id;
         name = Name;
-        description = Description;
+        description = Description; 
 
         type = TypeEnum.Fidele;
     }

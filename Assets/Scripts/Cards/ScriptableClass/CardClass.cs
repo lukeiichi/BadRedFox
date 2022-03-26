@@ -69,12 +69,12 @@ public class Card : ScriptableObject {
                 
                 // Retire un niveau au dieu du croyant
                 GetCardInGame(godMinus).LevelMinus();
-                playerVisual.UpdateHand(GetCardInGame(godMinus).card, "levelMinus");
+                playerVisual.UpdateHand(GetCardInGame(godMinus).card, "levelMinus", null);
             }
             // Retire l'image de la carte
             Destroy(GetImage(cardObject));
             Destroy(GetEventTrigger(cardObject));
-            playerVisual.UpdateHand(card, "dead");
+            playerVisual.UpdateHand(card, "dead", null);
 
             // Ajoute la carte à la liste des morts
             GetDeadCardManager(GetGameObject("DeadCardManager")).listDeadCards.Add(card);

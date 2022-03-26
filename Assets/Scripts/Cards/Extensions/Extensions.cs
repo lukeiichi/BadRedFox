@@ -22,7 +22,7 @@ static class MyExtensions
         }
     }
 
-    // Retourne un scrript bien précis à partir d'un GameObject
+    // Retourne un script bien précis à partir d'un GameObject
     public static CardInGame GetCardInGame(GameObject fromObject){
         return fromObject.transform.GetComponent<CardInGame>();
     }

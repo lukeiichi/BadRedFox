@@ -105,7 +105,7 @@ public class GodClass : Card
 
             // Modifie aussi la carte dans la main du joueur
             UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
-            playerVisual.UpdateHand(target, "effect");
+            playerVisual.UpdateHand(target, "effect", null);
         }else{
             Return(message);
         }
@@ -185,11 +185,33 @@ public class GodClass : Card
     // Effet du Métamorphe
     // Devient la carte ciblé et tue l'original
     public void MetamorpheEffect(Card target, GameObject usedPlace, GameObject targetPlace){
-        if(target.Type == TypeEnum.God && this.Level == 5){
-            GetCardInGame(usedPlace).card = target;
-            GetImage(usedPlace).texture = Resources.Load("Images/" + target.Name) as Texture2D;
-            target.Die(targetPlace, target, GetCardInGame(targetPlace));
+        UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
+        Card finalTransform = GetCardManager(GetGameObject("CardManager")).cards.Find(x => x.Name == "Le Fidèle"); 
+        switch(GetCardInGame(usedPlace).Level){
+            case 5:
+                finalTransform = target;
+                break;
+            case 4:
+                if(target.Type != TypeEnum.God){
+                    Debug.Log("il est niveau 4 et devient pas un dieu 0" + target.Type);
+                    finalTransform = target;
+                }
+                break;
+            case 3:
+                if(target.Type == TypeEnum.Fidele){
+                    finalTransform = target;
+                }
+                break;
+            default :
+                break;
         }
+        // Modifie la carte dans la main
+        playerVisual.UpdateHand(GetCardInGame(usedPlace).card, "became", finalTransform);
+        // Modifie la carte sur le terrain
+        GetCardInGame(usedPlace).card = finalTransform;
+        GetImage(usedPlace).texture = Resources.Load("Images/" + finalTransform.Name) as Texture2D;
+        // Tue la carte ciblé
+        target.Die(targetPlace, target, GetCardInGame(targetPlace));
     }
 
     public void ProtecteurEffect(){}

@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 098baf66aa501144895013fa19454bcb, type: 3}
-  m_Name: Vierge
+  m_Name: Enfant
   m_EditorClassIdentifier: 
   id: 15
-  name: Jeune vierge
-  description: "Lorsque la <b>Jeune vierge</b> d\xE9ploie son pouvoir, toutes les
-    cartes qui ont \xE9t\xE9 jou\xE9 contre son village et elle m\xEAme perdent leurs
-    pouvoirs. \n\n<color=red>Les effets sont tout de m\xEAme appliqu\xE9s ce tour-ci.</color>"
+  name: L'Enfant
+  description: "Lorsque l'<b>Enfant</b> d\xE9ploie son pouvoir, toutes les cartes
+    qui ont \xE9t\xE9 jou\xE9 contre son village et elle m\xEAme perdent leurs pouvoirs.
+    \n\n<color=red>Les effets sont tout de m\xEAme appliqu\xE9s ce tour-ci.</color>"
   type: 0
-  statut: 0
   color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   level: 5
   level1: "Retire le pouvoir \xE0 <color=red>1</color> dieu utilis\xE9 contre vous."
@@ -27,5 +26,5 @@ MonoBehaviour:
   level4: "Retire le pouvoir \xE0  <color=red>2</color> dieux utilis\xE9 contre vous."
   level5: "Retire le pouvoir \xE0 <color=red>3</color> les dieux utilis\xE9 contre
     vous."
-  disciple: Utilise le pouvoir de la <b>Jeune vierge</b> pour obtenir l'<color=red><b>Apprenti
-    Jeune vierge.</b></color>
+  disciple: Utilise le pouvoir de l'<b>Enfant</b> pour obtenir l'<color=red><b>Apprenti
+    Enfant.</b></color>

@@ -38,6 +38,9 @@ public class CardInGame : MonoBehaviour
     public CardInGame God{
         get{return god;}
     }
+    public Card Card{
+        get{return card;}
+    }
     public GameObject CardPlace{
         get{return cardPlace;}
     }
@@ -50,7 +53,7 @@ public class CardInGame : MonoBehaviour
     public Color Color {
         get {return color;}
     }
-       public int Level {
+    public int Level {
         get {return level;}
     }
     #endregion

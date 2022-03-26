@@ -64,7 +64,7 @@ public class CardDescription : MonoBehaviour
                     god.MetamorpheEffect(target, usedPlace, targetPlace);
                     break;
                 default :
-                    card.Die(targetPlace, target, GetCardInGame(targetPlace));
+                    god.MetamorpheEffect(target, usedPlace, targetPlace);
                     break;
             }
         }
@@ -101,11 +101,7 @@ public class CardDescription : MonoBehaviour
 
             // Change le texte du rappel de l'étape
             step.NextStep();
-                
-            /* PLUS QUE PROVISOIRE !! */
-            step.isPlayer = !step.isPlayer;
             ChangeButton(true, false);
-        /* PLUS QUE PORVISOIRE !! */
     }
     #endregion
 
@@ -116,9 +112,20 @@ public class CardDescription : MonoBehaviour
     public void SetValues(Card newCard, GameObject newCardPlace) {
         // A partir de l'id de la carte, on retrouver et associe son emplacement à cardInGame
         // En fonction de si c'est son village, associe la carte en tant que carte joué ou carte ciblé
-        if(step.isPlayer){
+        if(step.Etape != EtapeEnum.Target){
             card = newCard;
             usedPlace = newCardPlace;
+            
+            // Retire les boutons si c'est un vilageois lors de la phase de séléection de carte à jouer
+            if(newCard.Type == TypeEnum.Fidele){
+                ChangeButton(false, false);
+            }else{
+                if(step.Etape == EtapeEnum.Target){
+                    ChangeButton(true, false);
+                }else{
+                    ChangeButton(false, true);
+                }
+            }
         }
         else{
             target = newCard;
@@ -142,7 +149,7 @@ public class CardDescription : MonoBehaviour
             // Seulement si c'est une carte Dieu
             if (newCard.Type == TypeEnum.God)
             {
-                GodClass god = ConvertGod(card);
+                GodClass god = ConvertGod(newCard);
                 // Vérifie le niveau actuel de la carte
                 switch (GetCardInGame(newCardPlace).Level)
                 {
@@ -167,7 +174,7 @@ public class CardDescription : MonoBehaviour
                         break;
                 }
                 disciple.text = god.Disciple;
-            }        
+            }      
             // Si ce n'est pas un dieu, effacer le texte en trop
             else{
                 disciple.text = "";

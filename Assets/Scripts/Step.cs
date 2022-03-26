@@ -7,22 +7,22 @@ using static MyExtensions;
 
 public class Step : MonoBehaviour
 {
+    #region Initialisation
     public enum EtapeEnum{
         God,
         Fox,
         Target
     }
 
-    public bool isPlayer = true;
     private EtapeEnum lastStep = EtapeEnum.God;
     public EtapeEnum etape;
+    #endregion
 
-    public bool IsPlayer {
-        get {return isPlayer;}
-    }
+    #region Getters
     public EtapeEnum Etape{
         get { return etape; }
     }
+    #endregion
 
     // Passe le jeu autamitiquement à l'étape suivant // Dieu => Target => Fox => Target ... 
     public void NextStep(){
@@ -44,6 +44,7 @@ public class Step : MonoBehaviour
         ChangeText(message);
     }
 
+    // Modifie le texte
     public void ChangeText(string newText){
         TextMeshProUGUI rappelText = GetText(GetGameObject("RappelText"));
             rappelText.text = newText;
