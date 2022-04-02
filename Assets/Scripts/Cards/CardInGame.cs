@@ -16,17 +16,23 @@ public class CardInGame : MonoBehaviour
     }
 
     #region Initialisation
+    // Card and position
     [SerializeField]
     public Card card;
     public GameObject cardPlace;
 
+    // Values
     public bool effect;
     public Color color;
     public int level;
     public string name;
     public CardInGame god;
-    public Protection isProtected = Protection.Vulnerable;
 
+    // effets d'autres cartes
+    public Protection isProtected = Protection.Vulnerable;
+    public bool isInfected = false;
+
+    // Others
     private GameObject descriptionCard;
     private GameObject cardFromEffect;
     #endregion
@@ -65,20 +71,24 @@ public class CardInGame : MonoBehaviour
     }
 
     #region EditCard
+    public void SetInfection(){
+        
+    }
+
     // Edite la protection de la carte
     public void SetProtection(Protection protection){
         isProtected = protection;
     }
     // Ajouter le minus
     // Modifie la couleur de la carte
-    public void SetColor(Color coul){
+    public void SetColor(Color coul, UIManagerField managerField){
         color = coul;
-
+        
         // Associe le fidèle au bon Dieu de sa croyance
         if(coul == Color.white){
             god = null;
         }else if(card.Type == TypeEnum.Fidele){
-            god = GetCardInGame(Array.Find(GetUIManager(GameObject.Find("PlayerVisual(Clone)")).listCardsHand, x => GetCardInGame(x).Color == coul));
+            god = GetCardInGame(Array.Find(managerField.listCardsHand, x => GetCardInGame(x).Color == coul));
         }
     }
 

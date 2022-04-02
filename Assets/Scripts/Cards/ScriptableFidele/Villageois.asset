@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: Villageois
   m_EditorClassIdentifier: 
   id: 0
-  name: "Fid\xE8le"
+  name: "Le Fid\xE8le"
   description: "Le <b>Fid\xE8le</b> croit en un seul Dieu de son village. Il rapporte
     <color=red>1</color> niveau \xE0 son Dieu."
   type: 1
-  statut: 0
   color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   god: {fileID: 11400000, guid: 125f64c4b686c58458428c1c604fec4a, type: 2}

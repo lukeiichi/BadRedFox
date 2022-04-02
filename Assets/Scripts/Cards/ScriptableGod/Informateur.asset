@@ -13,13 +13,11 @@ MonoBehaviour:
   m_Name: Informateur
   m_EditorClassIdentifier: 
   id: 8
-  name: Informateur
+  name: L'Informateur
   description: "L\u2019<b>Informateur</b> donne des indications start\xE9gique \xE0
     son village."
   type: 0
-  effect: 1
-  color: {r: 0, g: 0, b: 1, a: 1}
-  isProtected: 0
+  color: {r: 0.5, g: 1, b: 0.5, a: 1}
   level: 5
   level1: Donne une indication peu utile.
   level2: Donne une indication peu utile.

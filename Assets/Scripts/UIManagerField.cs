@@ -19,6 +19,7 @@ public class UIManagerField : NetworkBehaviour
     //Initialisation
     public GameObject[] listCardsField;
     public GameObject[] listCardsHand;
+    public List<Card> playerCards = new List<Card>();
 
     private static readonly Random random = new Random();
     private List < Color > listColors = new List < Color > () {new Color(1f,0.5f,0.5f,1f), new Color(0.5f,1f,0.5f,1f), new Color(0.5f,0.5f,1f,1f), new Color(0.9f,1f,0.5f,1f)};
@@ -47,16 +48,10 @@ public class UIManagerField : NetworkBehaviour
                 break;
         }
     }
-
-
-
+    
     // Fonction au lancement qui distribue toute les cartes dont un village a besoin
-    public void DrawCards()
+    public void CmdDrawCards()
     {
-        #region Initialisation
-        List < Card > playerCards = new List < Card > ();
-        #endregion
-
         #region CardManager
         // Récupère toutes les cartes du CardManager
         CardManager cardManager = GetCardManager(GetGameObject("CardManager"));
@@ -76,26 +71,26 @@ public class UIManagerField : NetworkBehaviour
         #region DeckBuilding
         // Ajoute les dieux choisis au pif
         for (var i = 0; i < 4; i++) {
-            PlayerManager.listCard.Add(GetGods(gods, i));
+            playerCards.Add(GetGods(gods, i));
         }
         renard.SetColor(Color.white);
 
         // Ajoute la carte renard
-        PlayerManager.listCard.Add(renard);
+        playerCards.Add(renard);
 
         // Ajoute des images aux cartes de la main autre que fidèle
-        for (var i = 0; i < PlayerManager.listCard.Count; i++) {
-            GetTextureCoroutine(PlayerManager.listCard[i], listCardsHand[i], PlayerManager.listCard[i].Color);
+        for (var i = 0; i < playerCards.Count; i++) {
+            GetTextureCoroutine(playerCards[i], listCardsHand[i], playerCards[i].Color);
         }
         // Ajoute l'image et la texte du villageois dans la main
         GetTextureCoroutine(villageois, listCardsHand[5], Color.white);
 
         //Ajoute 20 cartes villageois
         for (var i = 0; i < 20; i++) {
-            PlayerManager.listCard.Add(villageois);
+            playerCards.Add(villageois);
         }
 
-        PlayerManager.listCard.ShuffleCard();
+        playerCards.ShuffleCard();
         // Ajoute des images aux cartes du terrain
         List < Color > colorGod = new List < Color > ();
         for (var i = 0; i < 5; i++) {
@@ -108,13 +103,13 @@ public class UIManagerField : NetworkBehaviour
         for (var i = 0; i < 25; i++) {
 
             Color colorCard = Color.white;
-            if (PlayerManager.listCard[i].Type == Card.TypeEnum.Fidele) {
+            if (playerCards[i].Type == Card.TypeEnum.Fidele) {
                 colorCard = colorGod.First();
                 colorGod.Remove(colorGod.First());
-            } else if (PlayerManager.listCard[i].Type == Card.TypeEnum.God) {
-                colorCard = PlayerManager.listCard[i].Color;
+            } else if (playerCards[i].Type == Card.TypeEnum.God) {
+                colorCard = playerCards[i].Color;
             }
-            GetTextureCoroutine(PlayerManager.listCard[i], listCardsField[i], colorCard);
+            GetTextureCoroutine(playerCards[i], listCardsField[i], colorCard);
         }
         #endregion
     }
@@ -133,15 +128,15 @@ public class UIManagerField : NetworkBehaviour
     // Ajoute une image aux cartes créées url : L'url de l'image carte : La carte a
     // éditer
     private void GetTextureCoroutine(Card card, GameObject cardPlace, Color colorCard) {
-        // Définit les données et la couleur de cardInGame 
+        // Définit les données et la couleur de cardInGame
         CardInGame cardInGame = GetCardInGame(cardPlace);
         cardInGame.SetValues(card, cardPlace);
-        cardInGame.SetColor(colorCard);
+        cardInGame.SetColor(colorCard, this);
 
-        // Modifie la couleur et l'image du GameObject
         RawImage rawImage = GetImage(cardPlace);
-        rawImage.color = cardInGame.Color;
-        rawImage.texture = Resources.Load("Images/" + cardInGame.card.Name)as Texture2D;
+            // Modifie la couleur et l'image du GameObject
+            rawImage.color = cardInGame.Color;
+            rawImage.texture = Resources.Load("Images/" + cardInGame.card.Name) as Texture2D;
     }
     
 }

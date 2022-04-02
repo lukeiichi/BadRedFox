@@ -95,7 +95,7 @@ public class GodClass : Card
     public void EnchanteresseEffect(Card target, GameObject targetPlace, GameObject usedPlace){
         // Prédéfinit le message d'erreur à envoyer
         string message = "La carte n'a pas pû être neutralisé car elle ne possède aucun pouvoir ou est trop forte pour vote sorcière.";
-        if(target.Name != "Fidèle"){
+        if(target.Name != "Le Fidèle"){
             if(target.Type == TypeEnum.God){
                 if(GetCardInGame(usedPlace).Level > GetCardInGame(targetPlace).Level){
                     Return(message);
@@ -178,7 +178,7 @@ public class GodClass : Card
     public void LeaderEffect(List<Card> listTarget, List<GameObject> targetPlaces){
         foreach(GameObject place in targetPlaces){
             GetImage(place).color = Color.white;
-            GetCardInGame(place).SetColor(Color.white);
+            //GetCardInGame(place).SetColor(Color.white, );
         }
     }
 
@@ -219,7 +219,9 @@ public class GodClass : Card
     public void EnsorceleuseEffect(){}
     public void EnfantEffect(){}
     public void ImitatriceEffect(){}
-    public void ContagionEffect(){}
+    public void ContagionEffect(){
+        
+    }
     public void SatanisteEffect(){}
     
     #endregion

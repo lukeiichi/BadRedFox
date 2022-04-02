@@ -63,8 +63,11 @@ public class CardDescription : MonoBehaviour
                 case "Le Métamorphe" :
                     god.MetamorpheEffect(target, usedPlace, targetPlace);
                     break;
+                case "La Contagion" :
+                    god.ContagionEffect();
+                    break;
                 default :
-                    god.MetamorpheEffect(target, usedPlace, targetPlace);
+                    god.EnchanteresseEffect(target, targetPlace, usedPlace);;
                     break;
             }
         }

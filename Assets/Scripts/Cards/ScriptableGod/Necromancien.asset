@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: Necromancien
   m_EditorClassIdentifier: 
   id: 10
-  name: "N\xE9cromancien"
+  name: "Le N\xE9cromancien"
   description: "Le <b>N\xE9cromancien</b> fait appel \xE0 la magie noir pour ressuciter
     les Croyants d\xE9c\xE9d\xE9s. \nLes revenants sont plac\xE9s face visible dans
     le village et gardent les m\xEAmes croyances qu\u2019\xE0 leurs vivant."
   type: 0
-  statut: 0
-  color: {r: 0, g: 1, b: 0, a: 1}
+  color: {r: 0.5, g: 1, b: 0.5, a: 1}
   level: 5
   level1: "R\xE9ssucite <color=red>1</color> Croyant."
   level2: "R\xE9ssucite <color=red>2</color> Croyants."

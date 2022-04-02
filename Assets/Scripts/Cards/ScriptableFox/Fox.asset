@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Fox
   m_EditorClassIdentifier: 
   id: 1
-  name: Fox
-  description: "Le <b>Renard</b> attaque les villages voisins pour prot\xE9ger le
+  name: L'Apprenti
+  description: "L'<b>Apprenti</b> attaque les villages voisins pour prot\xE9ger le
     sien. "
   type: 2
-  statut: 0
   color: {r: 1, g: 1, b: 1, a: 1}

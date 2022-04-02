@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: Spiritiste
   m_EditorClassIdentifier: 
   id: 14
-  name: Spiritiste
-  description: "Le <b>Spiritiste</b> utilise l\u2019effet d\u2019un Dieu d\xE9c\xE9d\xE9.
+  name: La Spiritiste
+  description: "La <b>Spiritiste</b> utilise l\u2019effet d\u2019un Dieu d\xE9c\xE9d\xE9.
     \n\n<color=red>Si aucun dieu n\u2019a \xE9t\xE9 trouv\xE9, la carte n\u2019aura
     aucun effet.</color>"
   type: 0
-  effect: 1
-  color: {r: 1, g: 0, b: 0, a: 1}
+  color: {r: 0.5, g: 1, b: 0.5, a: 1}
   level: 5
   level1: "Utilise le pouvoir d'un Dieu d\xE9c\xE9d\xE9 au niveau <color=red>1</color>."
   level2: "Utilise le pouvoir d'un Dieu d\xE9c\xE9d\xE9 au niveau <color=red>1</color>."

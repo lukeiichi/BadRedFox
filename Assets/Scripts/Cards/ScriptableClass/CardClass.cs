@@ -52,7 +52,7 @@ public class Card : ScriptableObject {
         get {return color;}
     }
     #endregion
-
+    
     // Edite la couleur de la carte 
     public void SetColor(Color coul) {
         color = coul;

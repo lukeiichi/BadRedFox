@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Sataniste
   m_EditorClassIdentifier: 
   id: 12
-  name: Sataniste
+  name: Le Sataniste
   description: Le <b>Sataniste</b> sacrifie un de ses Croyants pour affaiblir un
     Dieu adverse.
   type: 0
-  statut: 0
-  color: {r: 0, g: 1, b: 0, a: 1}
+  color: {r: 1, g: 0.5, b: 0.5, a: 1}
   level: 5
   level1: "Dans le village souhait\xE9, un Dieu choisit au hasard perd une \xE9toile."
   level2: "Dans le village souhait\xE9, un Dieu choisit au hasard perd une \xE9toile."

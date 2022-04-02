@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: Protecteur
   m_EditorClassIdentifier: 
   id: 11
-  name: Protecteur
+  name: Le Protecteur
   description: "Le <b>Protecteur</b> neurtalise tous les effets utilis\xE9s contre
     son village. \n\n<color=red>Si aucun effet est utilis\xE9, le Protecteur perd
     son pouvoir. </color>"
   type: 0
-  statut: 0
-  color: {r: 0, g: 1, b: 0, a: 1}
+  color: {r: 0.9, g: 1, b: 0.5, a: 1}
   level: 5
   level1: "Annule 1 effet utilis\xE9 contre son village. Il meurt obligatoirement
     \xE0 la fin de ce tour."

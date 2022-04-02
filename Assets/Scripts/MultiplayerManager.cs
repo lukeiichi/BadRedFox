@@ -5,17 +5,17 @@ using Mirror;
 
 public class MultiplayerManager : NetworkManager
 {
-    public override void OnStartServer(){
+
+    public NetworkConnection connexion;
+    public override void OnStartServer()
+    {
         Debug.Log("kek");
     }
-    public override void OnClientConnect(){
 
-/*
-           NetworkClient.RegisterPrefab(playerField);
+    public virtual void OnClientConnect(NetworkConnection conn){
+        Debug.Log("commence connect");
+        connexion = conn;
 
-         
-        GameObject playerVisual = Instantiate(playerField, new Vector3(0, 0, 0), Quaternion.identity);
-        NetworkServer.Spawn(playerVisual);*/
     }
 
 
