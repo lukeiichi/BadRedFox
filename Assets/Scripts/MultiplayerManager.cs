@@ -5,18 +5,15 @@ using Mirror;
 
 public class MultiplayerManager : NetworkManager
 {
-
+    public GameObject playerManager;
     public NetworkConnection connexion;
     public override void OnStartServer()
     {
         Debug.Log("kek");
     }
 
-    public virtual void OnClientConnect(NetworkConnection conn){
-        Debug.Log("commence connect");
+    public override void OnClientConnect(NetworkConnection conn){
         connexion = conn;
-
+        Debug.Log("commence connect"); 
     }
-
-
 }

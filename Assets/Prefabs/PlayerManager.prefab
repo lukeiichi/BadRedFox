@@ -100,9 +100,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   playerField: {fileID: 4445137470226176303, guid: 8e22b091d369fc74d8fff067f1f32c74, type: 3}
+  descriptionObject: {fileID: 1918399154095338444, guid: 00eb0adce79195e4789839d24525d268, type: 3}
   networkManager: {fileID: 4372139206159756410, guid: ef5f14e67dea2e94b9095f4752211aa2, type: 3}
-  listCamera:
-  - {fileID: 8130285553883447986, guid: a6b4718835ad94740b2fadab0a954be8, type: 3}
-  - {fileID: 8328487483407068739, guid: 5f3c6dc40138a9b419cb4d14f45c425c, type: 3}
-  - {fileID: 7546283492130867919, guid: db276a13e9b785941822a9f679785730, type: 3}
-  - {fileID: 8996201317952082831, guid: d0e6f5092431d5c4a8e5236e97c5460d, type: 3}
+  camera: {fileID: 2411250919510808334, guid: a6b4718835ad94740b2fadab0a954be8, type: 3}

@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: a7f4940769b868648912ea5a3d27a466
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - playerVisual: {fileID: 4445137470226176303, guid: 8e22b091d369fc74d8fff067f1f32c74, type: 3}
+  - deadCards: {fileID: 8539148118925621246, guid: 827f65164761afa48b40dc6959c75f93, type: 3}
+  - chooseButton: {instanceID: 0}
+  - playButton: {instanceID: 0}
+  - step: {instanceID: 0}
+  - targetPlace: {instanceID: 0}
+  - usedPlace: {instanceID: 0}
+  - card: {instanceID: 0}
+  - target: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

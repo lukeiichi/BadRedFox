@@ -10,24 +10,59 @@ using static MyExtensions;
 public class PlayerManager : NetworkBehaviour
 {    
     public GameObject playerField;
+    public GameObject descriptionObject;
     public MultiplayerManager networkManager;
-    public List<GameObject> listCamera = new List<GameObject>();
+    public Camera camera;
+
+    [SyncVar] private int numberPlayers;
 
     void Awake(){
         networkManager = GetGameObject("NetworkingManager").transform.GetComponent<MultiplayerManager>();
-        listCamera.Add(GetGameObject("Main Camera"));
-        listCamera.Add(GetGameObject("Main Camera2"));
-        listCamera.Add(GetGameObject("Main Camera3"));
-        listCamera.Add(GetGameObject("Main Camera4"));
-        CreateField(); 
+    }
+
+    void Start(){
+        if(isLocalPlayer){
+            CreateField();
+            CreateOpponent();
+
+            Transform transformInterface = GetGameObject("Interface").transform.GetComponent<Transform>();
+            Vector3 positionInterface = GetGameObject("Interface").transform.GetComponent<Transform>().position;
+            positionInterface.x = 0;
+            transformInterface.position = positionInterface;
+
+            //GameObject description = Instantiate(descriptionObject, new Vector3(0, 0, -9), Quaternion.identity);
+            //description.name = "CardDescriptio";
+        }
+    } 
+
+    void Update(){
+        numberPlayers = networkManager.numPlayers;
     }
 
     public void CreateField(){
-        Transform pos = listCamera[networkManager.numPlayers].transform.GetComponent<Transform>();
-        GameObject playerVisual = Instantiate(playerField,new Vector3(pos.position.x, pos.position.y,0), Quaternion.identity);
-        NetworkServer.Spawn(playerVisual);
-        //playerVisual.transform.GetComponent<NetworkIdentity>().AssignClientAuthority(networkManager.connexion);
+        //RpcGetNumberUser();
+        GameObject playerVisual = Instantiate(playerField,new Vector3(0, 0, 0), Quaternion.identity);
+        playerVisual.name = "PlayerField";
+        NetworkServer.Spawn(playerVisual);        
+        
         playerVisual.GetComponent<UIManagerField>().CmdDrawCards();
-        playerVisual.transform.GetComponent<Canvas>().worldCamera = listCamera[networkManager.numPlayers].transform.GetComponent<Camera>();
+
+        //playerVisual.transform.GetComponent<Canvas>().worldCamera = camera;
     }
+
+    public void CreateOpponent(){
+        //RpcGetNumberUser();
+        GameObject playerVisual = Instantiate(playerField,new Vector3(2100, 0, 0), Quaternion.identity);
+        playerVisual.name = "Ennemy";
+        NetworkServer.Spawn(playerVisual);
+        
+        playerVisual.GetComponent<UIManagerField>().CmdDrawCards();
+
+        //playerVisual.transform.GetComponent<Canvas>().worldCamera = camera;
+    }
+
+    /*[ClientRpc] public void RpcGetNumberUser(){
+        Debug.Log("under the nember get");
+        numberPlayers = networkManager.numPlayers;
+    } */
 }

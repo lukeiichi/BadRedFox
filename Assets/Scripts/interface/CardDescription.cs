@@ -24,9 +24,9 @@ public class CardDescription : MonoBehaviour
     public Card target;
 
     void Start(){
-        HideDescription();
         ChangeButton(false, true);
-
+        //HideDescription(); 
+        
         // Initialise step
         step = GetStep(GetGameObject("Rappel"));
     }
@@ -78,7 +78,9 @@ public class CardDescription : MonoBehaviour
 
     // Lorsqu'une caret est joué, vérifie de quel type il est
     public void ChooseCard(){
-        HideDescription();
+        
+
+        //HideDescription();
         if(card.Name == "La Divinatrice"){
             GodClass god = ConvertGod(card);
             if(GetCardInGame(usedPlace).Level == 1){

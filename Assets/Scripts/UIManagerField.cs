@@ -15,10 +15,10 @@ using static MyExtensions;
 
 public class UIManagerField : NetworkBehaviour
 {
-
     //Initialisation
     public GameObject[] listCardsField;
     public GameObject[] listCardsHand;
+    public GameObject playerVisual;
     public List<Card> playerCards = new List<Card>();
 
     private static readonly Random random = new Random();
@@ -50,8 +50,10 @@ public class UIManagerField : NetworkBehaviour
     }
     
     // Fonction au lancement qui distribue toute les cartes dont un village a besoin
+
     public void CmdDrawCards()
     {
+        Debug.Log("dedans le clientrpc");
         #region CardManager
         // Récupère toutes les cartes du CardManager
         CardManager cardManager = GetCardManager(GetGameObject("CardManager"));

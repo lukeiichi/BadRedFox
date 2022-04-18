@@ -66,7 +66,8 @@ public class CardInGame : MonoBehaviour
 
     // Trouve et initialise descriptionCard au lancement du script
     void Start(){
-        descriptionCard =  GameObject.Find("CardDescription");
+        descriptionCard =  GameObject.Find("Interface/CardDescription");
+        
         cardFromEffect =  GameObject.Find("CardFromEffect");
     }
 

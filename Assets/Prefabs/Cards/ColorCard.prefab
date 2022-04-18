@@ -159,12 +159,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89fc62244c0ed64ebe20bc998d476cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
   card: {fileID: 0}
+  cardPlace: {fileID: 0}
   effect: 0
-  type: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   level: 0
+  name: 
+  god: {fileID: 0}
+  isProtected: 0
+  isInfected: 0
+  descriptionCard: {fileID: 1918399154095338444, guid: 00eb0adce79195e4789839d24525d268, type: 3}
 --- !u!114 &-6753328162474363714
 MonoBehaviour:
   m_ObjectHideFlags: 0

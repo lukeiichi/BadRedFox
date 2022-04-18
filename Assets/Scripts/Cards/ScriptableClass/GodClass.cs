@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Random = System.Random;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,8 @@ public class GodClass : Card
     public string level5;
     [TextArea]
     public string disciple;
+
+    private static readonly Random random = new Random();
 
     /* Initialisation de la carte
     Fonction qui ajoute toute les données à la carte Dieu
@@ -104,7 +107,7 @@ public class GodClass : Card
             GetCardInGame(targetPlace).SetEffect(false);
 
             // Modifie aussi la carte dans la main du joueur
-            UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
+            UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerField"));
             playerVisual.UpdateHand(target, "effect", null);
         }else{
             Return(message);
@@ -169,7 +172,10 @@ public class GodClass : Card
     }
 
 
-    public void NecromancienEffect(){}
+    public void NecromancienEffect(UIManagerField targetField){
+        List < Card > gods = targetField.playerCards.FindAll(x => x.Type == TypeEnum.God);
+        Debug.Log(gods[random.Next(gods.Count)].Name);
+    }
 
     // Effet de l'informateur
     public void InformateurEffect(){}
@@ -185,7 +191,7 @@ public class GodClass : Card
     // Effet du Métamorphe
     // Devient la carte ciblé et tue l'original
     public void MetamorpheEffect(Card target, GameObject usedPlace, GameObject targetPlace){
-        UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
+        UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerField"));
         Card finalTransform = GetCardManager(GetGameObject("CardManager")).cards.Find(x => x.Name == "Le Fidèle"); 
         switch(GetCardInGame(usedPlace).Level){
             case 5:
