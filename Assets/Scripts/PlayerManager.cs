@@ -29,9 +29,6 @@ public class PlayerManager : NetworkBehaviour
             Vector3 positionInterface = GetGameObject("Interface").transform.GetComponent<Transform>().position;
             positionInterface.x = 0;
             transformInterface.position = positionInterface;
-
-            //GameObject description = Instantiate(descriptionObject, new Vector3(0, 0, -9), Quaternion.identity);
-            //description.name = "CardDescriptio";
         }
     } 
 
@@ -45,9 +42,7 @@ public class PlayerManager : NetworkBehaviour
         playerVisual.name = "PlayerField";
         NetworkServer.Spawn(playerVisual);        
         
-        playerVisual.GetComponent<UIManagerField>().CmdDrawCards();
-
-        //playerVisual.transform.GetComponent<Canvas>().worldCamera = camera;
+        playerVisual.GetComponent<UIManagerField>().CmdDrawCards(true);
     }
 
     public void CreateOpponent(){
@@ -56,9 +51,7 @@ public class PlayerManager : NetworkBehaviour
         playerVisual.name = "Ennemy";
         NetworkServer.Spawn(playerVisual);
         
-        playerVisual.GetComponent<UIManagerField>().CmdDrawCards();
-
-        //playerVisual.transform.GetComponent<Canvas>().worldCamera = camera;
+        playerVisual.GetComponent<UIManagerField>().CmdDrawCards(false);
     }
 
     /*[ClientRpc] public void RpcGetNumberUser(){

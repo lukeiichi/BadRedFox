@@ -82,14 +82,14 @@ public class CardInGame : MonoBehaviour
     }
     // Ajouter le minus
     // Modifie la couleur de la carte
-    public void SetColor(Color coul, UIManagerField managerField){
+    public void SetColor(Color coul, List<GameObject> listCardsHand){
         color = coul;
         
         // Associe le fidèle au bon Dieu de sa croyance
         if(coul == Color.white){
             god = null;
         }else if(card.Type == TypeEnum.Fidele){
-            god = GetCardInGame(Array.Find(managerField.listCardsHand, x => GetCardInGame(x).Color == coul));
+            god = GetCardInGame(listCardsHand.Find(x => GetCardInGame(x).Color == coul));
         }
     }
 

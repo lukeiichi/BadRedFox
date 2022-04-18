@@ -17,7 +17,7 @@ public class UIManagerField : NetworkBehaviour
 {
     //Initialisation
     public GameObject[] listCardsField;
-    public GameObject[] listCardsHand;
+    public List<GameObject> listCardsHand = new List<GameObject>();
     public GameObject playerVisual;
     public List<Card> playerCards = new List<Card>();
 
@@ -26,7 +26,7 @@ public class UIManagerField : NetworkBehaviour
 
     // Modifie l'état des cartes situé dans la main du joueur
     public void UpdateHand(Card updatedCard, string reason, Card target){
-        GameObject cardFound = Array.Find(listCardsHand, x => GetCardInGame(x).Name == updatedCard.Name);
+        GameObject cardFound = listCardsHand.Find(x => GetCardInGame(x).Name == updatedCard.Name);
         switch (reason){
             case "dead":
                 if (updatedCard.Type == TypeEnum.Fidele){
@@ -49,11 +49,15 @@ public class UIManagerField : NetworkBehaviour
         }
     }
     
-    // Fonction au lancement qui distribue toute les cartes dont un village a besoin
-
-    public void CmdDrawCards()
+    // Fonction au lancement qui distribue toute les cartes dont un village
+    public void CmdDrawCards(bool isPlayer)
     {
-        Debug.Log("dedans le clientrpc");
+        // Définit la liste de cartes dans la main du joueur
+        Transform playerHand = GetGameObject("PlayerHand").transform;
+        for (var i = 0; i < playerHand.transform.childCount; i++){
+            listCardsHand.Add(playerHand.GetChild(i).gameObject);
+        }
+
         #region CardManager
         // Récupère toutes les cartes du CardManager
         CardManager cardManager = GetCardManager(GetGameObject("CardManager"));
@@ -82,10 +86,11 @@ public class UIManagerField : NetworkBehaviour
 
         // Ajoute des images aux cartes de la main autre que fidèle
         for (var i = 0; i < playerCards.Count; i++) {
-            GetTextureCoroutine(playerCards[i], listCardsHand[i], playerCards[i].Color);
+            Debug.Log(listCardsHand[i]);
+            GetTextureCoroutine(playerCards[i], listCardsHand[i], playerCards[i].Color, isPlayer);
         }
         // Ajoute l'image et la texte du villageois dans la main
-        GetTextureCoroutine(villageois, listCardsHand[5], Color.white);
+        GetTextureCoroutine(villageois, listCardsHand[5], Color.white, isPlayer);
 
         //Ajoute 20 cartes villageois
         for (var i = 0; i < 20; i++) {
@@ -111,7 +116,7 @@ public class UIManagerField : NetworkBehaviour
             } else if (playerCards[i].Type == Card.TypeEnum.God) {
                 colorCard = playerCards[i].Color;
             }
-            GetTextureCoroutine(playerCards[i], listCardsField[i], colorCard);
+            GetTextureCoroutine(playerCards[i], listCardsField[i], colorCard, isPlayer);
         }
         #endregion
     }
@@ -127,18 +132,18 @@ public class UIManagerField : NetworkBehaviour
         return card;
     }
 
-    // Ajoute une image aux cartes créées url : L'url de l'image carte : La carte a
-    // éditer
-    private void GetTextureCoroutine(Card card, GameObject cardPlace, Color colorCard) {
+    // Ajoute une image aux cartes créées et les associe à un emplacement
+    private void GetTextureCoroutine(Card card, GameObject cardPlace, Color colorCard, bool isPlayer) {
         // Définit les données et la couleur de cardInGame
         CardInGame cardInGame = GetCardInGame(cardPlace);
         cardInGame.SetValues(card, cardPlace);
-        cardInGame.SetColor(colorCard, this);
+        cardInGame.SetColor(colorCard, listCardsHand);
 
-        RawImage rawImage = GetImage(cardPlace);
+        if (isPlayer == true){
+            RawImage rawImage = GetImage(cardPlace);
             // Modifie la couleur et l'image du GameObject
             rawImage.color = cardInGame.Color;
             rawImage.texture = Resources.Load("Images/" + cardInGame.card.Name) as Texture2D;
+        }
     }
-    
 }
