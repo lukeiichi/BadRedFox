@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using System;
 
 using static CardInGame;
+using static Interface;
 using static MyExtensions;
 
 public class Card : ScriptableObject {
@@ -59,22 +60,23 @@ public class Card : ScriptableObject {
     }
 
     // Supprime de la main et du terrain, la carte donné en paramètre et l'ajoute à la liste des morts
-    public void Die(GameObject cardObject, Card card, CardInGame cardPlace){
+    public void Die(GameObject cardObject, Card card, CardInGame cardPlace, UIManagerField managerFieldTarget){
         // Vérifie si la gardienne protège la carte
         if(cardPlace.Protected == Protection.Vulnerable){
-            UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerVisual(Clone)"));
             if (card.Type == TypeEnum.Fidele){
                 FideleClass fidele = ConvertFidele(card);
-                GameObject godMinus = Array.Find(playerVisual.listCardsField, x => GetCardInGame(x).Name == cardPlace.God.Name);
-                
-                // Retire un niveau au dieu du croyant
-                GetCardInGame(godMinus).LevelMinus();
-                playerVisual.UpdateHand(GetCardInGame(godMinus).card, "levelMinus", null);
+                for (var i = 0; i < 25; i++){
+                }
+                // Retire un niveau au dieu dans la main
+                cardPlace.God.LevelMinus();
+                // Retire un niveau au dieu sur le terrain
+                managerFieldTarget.UpdateHand(cardPlace.God.card, "levelMinus", null);
             }
-            // Retire l'image de la carte
+            // Retire l'image de la carte sur le terrain
             Destroy(GetImage(cardObject));
             Destroy(GetEventTrigger(cardObject));
-            playerVisual.UpdateHand(card, "dead", null);
+            // Retire l'image de la carte dans la main
+            managerFieldTarget.UpdateHand(card, "dead", null);
 
             // Ajoute la carte à la liste des morts
             GetDeadCardManager(GetGameObject("DeadCardManager")).listDeadCards.Add(card);

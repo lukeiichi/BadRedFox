@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Random = System.Random;
@@ -151,19 +152,18 @@ public class GodClass : Card
     // Ajouter un effet visuel sur la carte
     // Manque l'effet au niveau 5 
     // Indiquer au joueur le possedant que le bouclier a sauté 
-    public void GardienneEffect(Card card, CardInGame cardInGame){
-        switch(cardInGame.Level){
-            case >= 5:/*
-                List<Card> protectedCard = deck.FindAll(delegate(Card x){return x.Color == card.Color;});
-                foreach(Card nonProtectedCard in protectedCard){
-                    nonProtectedCard.SetProtection(true);
-                }*/
-                break;
+    public void GardienneEffect(int level, CardInGame cardInGame, UIManagerField actualField){
+        switch(level){
+            case >= 5:
+                Color colorWanted = cardInGame.Color;
+                GameObject[] cardsFromReligion  = Array.FindAll(actualField.listCardsField, x => GetCardInGame(x).Color == colorWanted);
+                Debug.Log(cardsFromReligion.Length);
+                foreach(GameObject cardPlace in cardsFromReligion){
+                    GetCardInGame(cardPlace).SetProtection(Protection.Protected);
+                }
+                    break;
             case 3:
                 cardInGame.SetProtection(Protection.OneTime);
-                break;
-            case 0 :
-                Return("La Gardienne n'a pas réussit à utiliser son pouvoir");
                 break;
             default :
                     cardInGame.SetProtection(Protection.Protected);
@@ -190,34 +190,46 @@ public class GodClass : Card
 
     // Effet du Métamorphe
     // Devient la carte ciblé et tue l'original
-    public void MetamorpheEffect(Card target, GameObject usedPlace, GameObject targetPlace){
+    public void MetamorpheEffect(Card target, GameObject usedPlace, GameObject targetPlace, UIManagerField actualField){
         UIManagerField playerVisual = GetUIManager(GetGameObject("PlayerField"));
         Card finalTransform = GetCardManager(GetGameObject("CardManager")).cards.Find(x => x.Name == "Le Fidèle"); 
+        var echec = false;
         switch(GetCardInGame(usedPlace).Level){
-            case 5:
+            case >= 5:
                 finalTransform = target;
                 break;
             case 4:
                 if(target.Type != TypeEnum.God){
-                    Debug.Log("il est niveau 4 et devient pas un dieu 0" + target.Type);
                     finalTransform = target;
+                }else{
+                    echec = true;
                 }
                 break;
             case 3:
                 if(target.Type == TypeEnum.Fidele){
                     finalTransform = target;
+                }else{
+                    echec = true;
                 }
                 break;
             default :
+                echec = true;
                 break;
         }
+
+        // En cas d'echec ou au niveau 1 et 2, il devient un simple Fidèle
+        if(echec == true){
+            Card simpleCroyant = GetCardManager(GetGameObject("CardManager")).cards.Find(x => x.Name == "Le Fidèle");
+            finalTransform = simpleCroyant;
+        }
+
         // Modifie la carte dans la main
         playerVisual.UpdateHand(GetCardInGame(usedPlace).card, "became", finalTransform);
         // Modifie la carte sur le terrain
         GetCardInGame(usedPlace).card = finalTransform;
         GetImage(usedPlace).texture = Resources.Load("Images/" + finalTransform.Name) as Texture2D;
         // Tue la carte ciblé
-        target.Die(targetPlace, target, GetCardInGame(targetPlace));
+        target.Die(targetPlace, target, GetCardInGame(targetPlace), actualField);
     }
 
     public void ProtecteurEffect(){}
@@ -228,7 +240,9 @@ public class GodClass : Card
     public void ContagionEffect(){
         
     }
-    public void SatanisteEffect(){}
+    public void SatanisteEffect(){
+
+    }
     
     #endregion
 

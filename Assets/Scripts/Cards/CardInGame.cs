@@ -107,6 +107,10 @@ public class CardInGame : MonoBehaviour
         level --;
     }
 
+    public void SetLevel(int newLevel){
+        level = newLevel;
+    }
+
     // Modifie les données de la carte (statut, type et niveau)
     public void SetValues(Card newCard, GameObject newCardPlace) {
         cardPlace = newCardPlace;

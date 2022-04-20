@@ -24,27 +24,28 @@ public class UIManagerField : NetworkBehaviour
     private static readonly Random random = new Random();
     private List < Color > listColors = new List < Color > () {new Color(1f,0.5f,0.5f,1f), new Color(0.5f,1f,0.5f,1f), new Color(0.5f,0.5f,1f,1f), new Color(0.9f,1f,0.5f,1f)};
 
-    // Modifie l'état des cartes situé dans la main du joueur
+    // Modifie l'état des cartes situé dans la main ou le terrain du joueur
     public void UpdateHand(Card updatedCard, string reason, Card target){
-        GameObject cardFound = listCardsHand.Find(x => GetCardInGame(x).Name == updatedCard.Name);
+        GameObject cardFoundField = Array.Find(listCardsField, x => GetCardInGame(x).Name == updatedCard.Name);
+        GameObject cardFoundHand = listCardsHand.Find(x => GetCardInGame(x).Name == updatedCard.Name);
         switch (reason){
             case "dead":
                 if (updatedCard.Type == TypeEnum.Fidele){
-                    GetNumber(cardFound).Kill();
+                    GetNumber(cardFoundHand).Kill();
                 }else{
-                    Destroy(GetImage(cardFound));
-                    Destroy(GetEventTrigger(cardFound));
+                    Destroy(GetImage(cardFoundHand));
+                    Destroy(GetEventTrigger(cardFoundHand));
                 }
                 break;
             case "levelMinus":
-                GetCardInGame(cardFound).LevelMinus();
+                GetCardInGame(cardFoundField).LevelMinus();
                 break;
             case "effect":
-                GetCardInGame(cardFound).SetEffect(false);
+                GetCardInGame(cardFoundHand).SetEffect(false);
                 break;
             default:
-                GetCardInGame(cardFound).card = target;
-                GetImage(cardFound).texture = Resources.Load("Images/" + target.Name) as Texture2D;
+                GetCardInGame(cardFoundField).card = target;
+                GetImage(cardFoundField).texture = Resources.Load("Images/" + target.Name) as Texture2D;
                 break;
         }
     }
@@ -85,12 +86,14 @@ public class UIManagerField : NetworkBehaviour
         playerCards.Add(renard);
 
         // Ajoute des images aux cartes de la main autre que fidèle
-        for (var i = 0; i < playerCards.Count; i++) {
-            Debug.Log(listCardsHand[i]);
-            GetTextureCoroutine(playerCards[i], listCardsHand[i], playerCards[i].Color, isPlayer);
+        if(isPlayer == true){
+            for (var i = 0; i < playerCards.Count; i++) {
+                
+                    GetTextureCoroutine(playerCards[i], listCardsHand[i], playerCards[i].Color, true); 
+            }
+            // Ajoute l'image et la texte du villageois dans la main
+            GetTextureCoroutine(villageois, listCardsHand[5], Color.white, true);
         }
-        // Ajoute l'image et la texte du villageois dans la main
-        GetTextureCoroutine(villageois, listCardsHand[5], Color.white, isPlayer);
 
         //Ajoute 20 cartes villageois
         for (var i = 0; i < 20; i++) {

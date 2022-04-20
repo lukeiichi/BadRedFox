@@ -6,6 +6,7 @@ using TMPro;
 using Random = System.Random;
 
 using static Step;
+using static CardInGame;
 using static MyExtensions;
 using static Card;
 
@@ -13,7 +14,8 @@ public class CardDescription : MonoBehaviour
 {
     #region Initialisation
     public GameObject playerVisual;
-    public GameObject deadCards;
+    public Interface interfaceScript;
+    public DeadCardManager deadCards;
     public GameObject chooseButton;
     public GameObject playButton;
     public Step step;
@@ -22,6 +24,17 @@ public class CardDescription : MonoBehaviour
     public GameObject usedPlace;
     public Card card ;
     public Card target;
+
+    private string spiritisteEffect;
+
+    private enum WantedEnum
+    {
+        All,
+        God,
+        Fidele,
+        SimpleFidele,
+    }
+    private WantedEnum targetWanted = WantedEnum.All;
 
     void Start(){
         ChangeButton(false, true);
@@ -47,7 +60,7 @@ public class CardDescription : MonoBehaviour
         // Vérifie si la carte est un renard ou un dieu
         if(card.Type == TypeEnum.God){ 
             GodClass god = ConvertGod(card);
-            switch(god.Name){
+            switch(god.Name == "La Spiritiste"?spiritisteEffect:god.Name){
                 case "La Divinatrice" : 
                     god.DivinatriceEffect(target, targetPlace, usedPlace);
                     break;
@@ -55,55 +68,58 @@ public class CardDescription : MonoBehaviour
                     god.EnchanteresseEffect(target, targetPlace, usedPlace);
                     break;
                 case "La Gardienne" : 
-                    god.GardienneEffect(target, GetCardInGame(targetPlace));
+                    god.GardienneEffect(GetCardInGame(usedPlace).Level, GetCardInGame(targetPlace), interfaceScript.actualField);
                     break;
                 case "L'Imitatrice" :
                     god.ImitatriceEffect();
                     break;
                 case "Le Métamorphe" :
-                    god.MetamorpheEffect(target, usedPlace, targetPlace);
+                    god.MetamorpheEffect(target, usedPlace, targetPlace, interfaceScript.actualField);
                     break;
                 case "La Contagion" :
                     god.ContagionEffect();
                     break;
+                case "La Spiritiste" :
+                    Debug.Log("La Spiritiste n'a pas réussi à utiliser le pouvoir d'un défunt");
+                    break;
                 default :
-                    god.EnchanteresseEffect(target, targetPlace, usedPlace);;
+                    god.MetamorpheEffect(target, usedPlace, targetPlace, interfaceScript.actualField);
                     break;
             }
         }
         else{
-            card.Die(targetPlace, target, GetCardInGame(targetPlace));
+            card.Die(targetPlace, target, GetCardInGame(targetPlace), interfaceScript.actualField);
         }
     }
 
     // Lorsqu'une caret est joué, vérifie de quel type il est
     public void ChooseCard(){
-        
-
-        //HideDescription();
-        if(card.Name == "La Divinatrice"){
-            GodClass god = ConvertGod(card);
+        interfaceScript.ChangeField(1);
+        HideDescription();
+        GodClass god = ConvertGod(card);
+        if(card.Name == "La Spiritiste"){
+            spiritisteEffect = deadCards.GetRandomGod();
+        }
+        if(card.Name == "La Divinatrice" || spiritisteEffect == "La Divinatrice"){
             if(GetCardInGame(usedPlace).Level == 1){
                 Random rand = new Random();
             }
+        }else if(card.Name == "La Gardienne"){
+            switch(GetCardInGame(usedPlace).Level){
+                case 5:
+                    targetWanted = WantedEnum.All;
+                    break;
+                case 2:
+                    targetWanted = WantedEnum.Fidele;
+                    break;
+                case 1:
+                    targetWanted = WantedEnum.SimpleFidele;
+                    break;
+                default :
+                    targetWanted = WantedEnum.God;
+                    break;
+            }
         }
-            /*
-            switch(god.Name){
-                case "Divinatrice":
-                    if(god.Level == 1){
-                        choose = false;
-                        step.ChangeText("Choisis un village à cibler");
-                    }
-                    break;
-                case "Enchanteresse" :
-                    Debug.Log(deadCards.transform.GetComponent<DeadCardManager>().GetRandomCard());
-                    break;
-                default:
-                    break;
-            }*/
-            
-            // Debug.Log(deadCards.transform.GetComponent<DeadCardManager>().GetRandomCard());
-
             // Change le texte du rappel de l'étape
             step.NextStep();
             ChangeButton(true, false);
@@ -115,6 +131,8 @@ public class CardDescription : MonoBehaviour
         chooseButton.SetActive(chooseBool);
     }
     public void SetValues(Card newCard, GameObject newCardPlace) {
+        Debug.Log(GetCardInGame(newCardPlace).Protected);
+
         // A partir de l'id de la carte, on retrouver et associe son emplacement à cardInGame
         // En fonction de si c'est son village, associe la carte en tant que carte joué ou carte ciblé
         if(step.Etape != EtapeEnum.Target){
@@ -124,25 +142,63 @@ public class CardDescription : MonoBehaviour
             // Retire les boutons si c'est un vilageois lors de la phase de séléection de carte à jouer
             if(newCard.Type == TypeEnum.Fidele){
                 ChangeButton(false, false);
-            }else{
-                if(step.Etape == EtapeEnum.Target){
-                    ChangeButton(true, false);
-                }else{
-                    ChangeButton(false, true);
-                }
+            }else if(step.Etape == EtapeEnum.Target){
+                ChangeButton(true, false);
+            }
+            else{
+                ChangeButton(false, true);
             }
         }
         else{
+            if(card.Name == "La Gardienne"){
+                var canI = true;
+                Debug.Log(targetWanted);
+                //Vérifie que la carte est apte à être sélectionné (Gardienne)
+                if(targetWanted != WantedEnum.All){
+                    if (newCard.Type == TypeEnum.Fidele)
+                    {
+                        if (newCard.Name != "Le Fidèle")
+                        {
+                            if (targetWanted != WantedEnum.Fidele)
+                            {
+                                canI = false;
+                            }
+                        } 
+                    }
+                    else if (newCard.Type == TypeEnum.God)
+                    {
+                        if (targetWanted != WantedEnum.God)
+                        {
+                            canI = false;
+                        }
+                    }
+                }
+
+                if(canI == true){
+                    ChangeButton(true, false);
+                }
+                else{
+                    ChangeButton(false, false);
+                }
+            }
+
             target = newCard;
             targetPlace = newCardPlace;
         }
 
         // Sélectionne toutes les zones à éditer
         RawImage photo = GetImage(GetGameObject("Image"));
+        RawImage protection = GetImage(GetGameObject("Protection"));
         TextMeshProUGUI name = GetText(GetGameObject("Name"));
         TextMeshProUGUI desc = GetText(GetGameObject("Description"));
         TextMeshProUGUI effect = GetText(GetGameObject("Effect"));
         TextMeshProUGUI disciple = GetText(GetGameObject("Disciple"));
+
+        if(GetCardInGame(newCardPlace).Protected != Protection.Vulnerable){
+            protection.color = new Color(protection.color.r, protection.color.g, protection.color.b, 1f);
+        }else{
+            protection.color = new Color(protection.color.r, protection.color.g, protection.color.b, 0f);
+        }
 
         // Edite la description 
         photo.texture = Resources.Load("Images/" + newCard.Name)as Texture2D;

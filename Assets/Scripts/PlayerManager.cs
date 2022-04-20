@@ -47,11 +47,11 @@ public class PlayerManager : NetworkBehaviour
 
     public void CreateOpponent(){
         //RpcGetNumberUser();
-        GameObject playerVisual = Instantiate(playerField,new Vector3(2100, 0, 0), Quaternion.identity);
-        playerVisual.name = "Ennemy";
-        NetworkServer.Spawn(playerVisual);
+        GameObject ennemyVisual = Instantiate(playerField,new Vector3(2100, 0, 0), Quaternion.identity);
+        ennemyVisual.name = "Ennemy";
+        NetworkServer.Spawn(ennemyVisual);
         
-        playerVisual.GetComponent<UIManagerField>().CmdDrawCards(false);
+        ennemyVisual.GetComponent<UIManagerField>().CmdDrawCards(false);
     }
 
     /*[ClientRpc] public void RpcGetNumberUser(){

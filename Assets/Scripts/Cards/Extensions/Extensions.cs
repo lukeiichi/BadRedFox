@@ -32,6 +32,9 @@ static class MyExtensions
     public static CardDescription GetDescription(GameObject fromObject){
         return fromObject.transform.GetComponent<CardDescription>();
     }
+    public static Interface GetInterface(GameObject fromObject){
+        return fromObject.transform.GetComponent<Interface>();
+    }
     public static UIManagerField GetUIManager(GameObject fromObject){
         return fromObject.transform.GetComponent<UIManagerField>();
     }
